@@ -1,16 +1,60 @@
-# React + Vite
+# 🌐 IncomeLens Dashboard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**IncomeLens** is a premium, highly interactive visual analytics platform designed to analyze global income disparities, demographic wealth distribution, and policy impact across regions. 
 
-Currently, two official plugins are available:
+Built with modern web technologies, this dashboard offers a "real-time" data feel through complex animations, glassmorphism UI elements, and deep interactive charting.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## ✨ Key Features
+- **Premium Glassmorphism UI**: A stunning dark-mode interface with animated radial gradients, responsive hover states, and glossy cards.
+- **Global Overview**: Real-time mock data flow showing Gini Index, poverty rates, and overall wealth distribution with comprehensive Recharts visualizations.
+- **Global Explorer**: Simulated geographic and regional insights using interactive components. Includes a placeholder for embedding interactive PowerBI/Tableau heatmaps.
+- **Country Analysis**: Deep dive into specific national economic structures, featuring timeline charts and dynamic metric cards.
+- **Framer Motion Integration**: Staggered component mounting, spring-physics hover interactions, and micro-animations for an elevated user experience.
+- **Complete Authentication Flow**: Login and Signup mock sequences wrapped in a fully interactive, animated layout.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## 🛠 Tech Stack
+- **React 18** (Vite)
+- **Tailwind CSS v4** (Utility-first styling with custom theme variations)
+- **Framer Motion** (Production-ready animation and gesture library)
+- **Recharts** (Composable charting library built on React components)
+- **Lucide React** (Beautiful and consistent icons)
+- **React Router DOM** (Client-side routing and layout management)
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## 🚀 How to Run Locally
+
+If you are a teammate cloning the repository for the first time, follow these instructions to get the IncomeLens Dashboard running on your local machine.
+
+### Prerequisites
+Make sure you have [Node.js](https://nodejs.org/) (Version 18+ recommended) installed on your system.
+
+### 1. Clone the Repository
+Open your terminal and clone this GitHub repository:
+```bash
+git clone https://github.com/bnssaanirudh/IncomeLens-Dashboard.git
+```
+
+### 2. Install Dependencies
+Navigate into the newly created project folder and install the required NPM packages:
+```bash
+cd IncomeLens-Dashboard
+npm install
+```
+
+### 3. Start the Development Server
+Once the installation finishes, start the Vite development server:
+```bash
+npm run dev
+```
+
+### 4. Open the App!
+Your terminal will output a local address (usually `http://localhost:5173`). Click the link or paste it into your browser to view the application.
+
+*Note: As this is currently a frontend prototype, you can use any mock credentials (e.g. email: `admin@incomelens.com`, password: `password123`) to bypass the login screen and access the main dashboard!*
+
+---
