@@ -1,0 +1,64 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #3b82f6;
+  --color-primary-dark: #2563eb;
+  --color-secondary: #8b5cf6;
+  --color-secondary-dark: #7c3aed;
+  
+  --color-background: #0f172a;
+  --color-surface: rgba(30, 41, 59, 0.7);
+  --color-surface-brighter: rgba(51, 65, 85, 0.7);
+  --color-text-primary: #f8fafc;
+  --color-text-secondary: #94a3b8;
+  
+  --color-border: rgba(255, 255, 255, 0.1);
+  --color-border-hover: rgba(255, 255, 255, 0.2);
+  
+  --shadow-glass: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  --blur-glass: blur(12px);
+}
+
+@layer base {
+  body {
+    @apply bg-background text-text-primary font-sans antialiased;
+    background-image: 
+      radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.15) 0px, transparent 50%),
+      radial-gradient(at 100% 100%, rgba(139, 92, 246, 0.15) 0px, transparent 50%);
+    background-attachment: fixed;
+    min-height: 100vh;
+  }
+}
+
+@layer components {
+  .glass-panel {
+    @apply bg-surface backdrop-blur-md border border-border shadow-2xl rounded-2xl;
+  }
+  
+  .glass-card {
+    @apply bg-surface backdrop-blur-sm border border-border/50 shadow-xl rounded-xl transition-all duration-300;
+  }
+  
+  .glass-card:hover {
+    @apply bg-surface-brighter border-border-hover shadow-2xl transform -translate-y-1;
+  }
+}
+
+/* Custom scrollbar for webkit */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(15, 23, 42, 0.5); 
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(51, 65, 85, 0.8); 
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(71, 85, 105, 1); 
+}
