@@ -1,20 +1,22 @@
-import ChartCard from '../components/ui/ChartCard';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import React from 'react';
+import PowerBIEmbed from '../components/ui/PowerBIEmbed';
 import { motion } from 'framer-motion';
-
-const timelineData = [
-    { year: '2015', bottom: 12, top: 46 },
-    { year: '2016', bottom: 12.5, top: 45.8 },
-    { year: '2017', bottom: 13, top: 45.5 },
-    { year: '2018', bottom: 13.8, top: 45 },
-    { year: '2019', bottom: 14.5, top: 44.5 },
-    { year: '2020', bottom: 14.2, top: 46.2 },
-    { year: '2021', bottom: 13.5, top: 47 },
-    { year: '2022', bottom: 14, top: 46.5 },
-    { year: '2023', bottom: 14.8, top: 45.8 },
-];
+import { Building2, Search, BookOpen, BarChart3 } from 'lucide-react';
+import html2pdf from 'html2pdf.js';
 
 const CountryAnalysis = () => {
+    const handleExportPDF = () => {
+        const element = document.getElementById('country-analysis-content');
+        const opt = {
+            margin: 0.5,
+            filename: 'Country-Analysis-Report.pdf',
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2, useCORS: true },
+            jsPDF: { unit: 'in', format: 'letter', orientation: 'landscape' }
+        };
+        html2pdf().set(opt).from(element).save();
+    };
+
     const containerVariants = {
         hidden: { opacity: 0 },
         visible: {
@@ -30,78 +32,90 @@ const CountryAnalysis = () => {
 
     return (
         <motion.div
-            className="space-y-6"
+            id="country-analysis-content"
+            className="space-y-8"
             variants={containerVariants}
             initial="hidden"
             animate="visible"
         >
-            <motion.div variants={itemVariants} className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 mb-4">
+            <motion.div variants={itemVariants} className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
                 <div>
-                    <h2 className="text-3xl font-bold text-white tracking-tight flex items-center gap-3">
+                    <h2 className="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-rose-500 tracking-tight flex items-center gap-3">
                         Country Analysis
-                        <span className="relative flex h-3 w-3">
-                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75"></span>
-                            <span className="relative inline-flex rounded-full h-3 w-3 bg-purple-500"></span>
-                        </span>
+                        <Building2 className="text-rose-400" size={32} />
                     </h2>
-                    <p className="text-text-secondary mt-1">Deep dive into national economic structures</p>
+                    <p className="text-text-secondary mt-2 text-lg">Detailed macroeconomic breakdown and policy impact</p>
                 </div>
 
-                <div className="w-full md:w-64 glass-panel border border-primary/30 p-1 rounded-xl">
-                    <select className="w-full bg-transparent text-white border-none outline-none py-2 px-3 appearance-none cursor-pointer">
-                        <option className="bg-background text-white">United States</option>
-                        <option className="bg-background text-white">United Kingdom</option>
-                        <option className="bg-background text-white">Germany</option>
-                        <option className="bg-background text-white">India</option>
-                        <option className="bg-background text-white">Brazil</option>
-                    </select>
+                <div className="flex flex-col md:flex-row gap-3 w-full md:w-auto">
+                    <div className="w-full md:w-72 relative group">
+                        <div className="absolute inset-0 bg-gradient-to-r from-orange-500 to-rose-500 rounded-xl blur opacity-30 group-hover:opacity-60 transition duration-500"></div>
+                        <div className="relative glass-panel border border-white/20 p-1.5 rounded-xl flex items-center bg-black/50 backdrop-blur-xl">
+                            <Search className="text-text-secondary ml-3 mr-2" size={18} />
+                            <select className="flex-1 bg-transparent text-white font-medium border-none outline-none py-2 px-2 appearance-none cursor-pointer">
+                                <option className="bg-background text-white">United States - Analysis</option>
+                                <option className="bg-background text-white">United Kingdom - Analysis</option>
+                                <option className="bg-background text-white">Germany - Analysis</option>
+                                <option className="bg-background text-white">India - Analysis</option>
+                                <option className="bg-background text-white">Brazil - Analysis</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button onClick={handleExportPDF} className="px-6 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white font-medium text-sm hover:bg-white/10 transition-all hover:shadow-[0_0_20px_rgba(255,255,255,0.15)] backdrop-blur-md whitespace-nowrap">
+                        Export PDF
+                    </button>
                 </div>
             </motion.div>
 
-            <motion.div variants={itemVariants} className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <ChartCard title="Income Share Timeline" subtitle="Top 10% vs Bottom 50%">
-                    <ResponsiveContainer width="100%" height="100%">
-                        <LineChart data={timelineData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
-                            <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="rgba(255,255,255,0.05)" />
-                            <XAxis dataKey="year" stroke="#94a3b8" axisLine={false} tickLine={false} />
-                            <YAxis stroke="#94a3b8" axisLine={false} tickLine={false} domain={[0, 60]} />
-                            <Tooltip
-                                contentStyle={{ backgroundColor: 'rgba(15, 23, 42, 0.9)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px' }}
-                                itemStyle={{ color: '#fff' }}
-                            />
-                            <Line type="monotone" dataKey="top" name="Top 10% Share" stroke="#3b82f6" strokeWidth={3} dot={{ r: 4, strokeWidth: 2 }} activeDot={{ r: 6 }} />
-                            <Line type="monotone" dataKey="bottom" name="Bottom 50% Share" stroke="#8b5cf6" strokeWidth={3} dot={{ r: 4, strokeWidth: 2 }} activeDot={{ r: 6 }} />
-                        </LineChart>
-                    </ResponsiveContainer>
-                </ChartCard>
-
-                <div className="glass-panel p-6 flex flex-col">
-                    <h3 className="text-xl font-semibold text-white mb-6">Demographic Breakdown</h3>
-                    <div className="flex-1 flex flex-col items-center justify-center border-2 border-dashed border-white/10 rounded-xl bg-black/10">
-                        <p className="text-text-secondary mb-4 text-center max-w-sm">Connect Tableau or Power BI workspace to view interactive demographic filtering.</p>
-                        <button className="relative px-6 py-3 rounded-xl bg-secondary hover:bg-secondary-dark text-white font-medium transition-all shadow-[0_0_15px_rgba(139,92,246,0.3)] hover:shadow-[0_0_30px_rgba(139,92,246,0.5)] overflow-hidden group">
-                            <span className="relative z-10">Connect Data Source</span>
-                            <div className="absolute inset-0 h-full w-full scale-0 rounded-xl transition-all duration-300 group-hover:scale-100 group-hover:bg-white/10"></div>
-                        </button>
+            <motion.div variants={itemVariants} className="relative group rounded-3xl p-1 bg-gradient-to-tr from-orange-500/20 to-rose-500/20">
+                <div className="absolute inset-0 bg-gradient-to-r from-orange-500/20 to-rose-500/20 rounded-3xl blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+                <div className="relative glass-card rounded-[1.4rem] overflow-hidden shadow-2xl border border-white/10 bg-black/40 backdrop-blur-xl">
+                    <div className="p-4 border-b border-white/5 flex items-center gap-3">
+                        <BarChart3 className="text-orange-400" size={20} />
+                        <span className="text-sm font-bold text-white tracking-widest uppercase">Deep Dive Metrics</span>
+                    </div>
+                    <div className="p-2">
+                        <PowerBIEmbed
+                            title="Country Specific Dashboard"
+                            height="650px"
+                            embedUrl="https://app.powerbi.com/view?r=eyJrIjoiMTMyNDk0ZjItODQwNS00N2E1LTg0NTQtYTg0YWU5MjVkZTQ3IiwidCI6IjgwOGNjODNlLWE1NDYtNDdlNy1hMDNmLTczYTFlYmJhMjRmMyIsImMiOjEwfQ%3D%3D&pageName=54855b14d1cf11fb1eb8"
+                        />
                     </div>
                 </div>
             </motion.div>
 
-            <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-2">
-                <div className="glass-card p-6 border-l-4 border-l-blue-500 hover:-translate-y-1 transition-transform duration-300">
-                    <p className="text-sm text-text-secondary uppercase tracking-wider mb-2">Policy Impact</p>
-                    <h4 className="text-lg font-bold text-white mb-2">Tax Reform '22</h4>
-                    <p className="text-sm text-text-secondary">Estimated 1.2% reduction in Gini coefficient observed post-implementation of progressive bracket adjustments.</p>
+            <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="glass-card p-8 rounded-3xl border-t-4 border-t-orange-500 relative overflow-hidden group hover:-translate-y-2 transition-all duration-300">
+                    <div className="absolute -right-10 -top-10 opacity-10 group-hover:opacity-20 transition-opacity">
+                        <BookOpen size={150} />
+                    </div>
+                    <p className="text-xs text-orange-400 font-bold uppercase tracking-widest mb-3 relative z-10">Audit Compliance</p>
+                    <h4 className="text-2xl font-bold text-white mb-4 relative z-10">Regional Audit Status</h4>
+                    <p className="text-text-secondary leading-relaxed relative z-10">
+                        Detailed breakdown correlates local risk factors with direct improvements in overall audit and compliance accuracy.
+                    </p>
                 </div>
-                <div className="glass-card p-6 border-l-4 border-l-purple-500 hover:-translate-y-1 transition-transform duration-300">
-                    <p className="text-sm text-text-secondary uppercase tracking-wider mb-2">Social Mobility</p>
-                    <h4 className="text-lg font-bold text-white mb-2">Education Index</h4>
-                    <p className="text-sm text-text-secondary">Strong correlation (0.84) between regional education funding and intergenerational wealth mobility.</p>
+
+                <div className="glass-card p-8 rounded-3xl border-t-4 border-t-rose-500 relative overflow-hidden group hover:-translate-y-2 transition-all duration-300">
+                    <div className="absolute -right-10 -top-10 opacity-10 group-hover:opacity-20 transition-opacity">
+                        <Building2 size={150} />
+                    </div>
+                    <p className="text-xs text-rose-400 font-bold uppercase tracking-widest mb-3 relative z-10">Data Assurance</p>
+                    <h4 className="text-2xl font-bold text-white mb-4 relative z-10">NLP Risk Analysis</h4>
+                    <p className="text-text-secondary leading-relaxed relative z-10">
+                        Advanced NLP model processing of regional financial documents shows a 15% increase in automated fraud detection accuracy.
+                    </p>
                 </div>
-                <div className="glass-card p-6 border-l-4 border-l-red-500 hover:-translate-y-1 transition-transform duration-300">
-                    <p className="text-sm text-text-secondary uppercase tracking-wider mb-2">Risk Factor</p>
-                    <h4 className="text-lg font-bold text-white mb-2">Inflation Pressure</h4>
-                    <p className="text-sm text-text-secondary">Bottom quartile real purchasing power decreased by 4.1% over the last 18 months despite wage growth.</p>
+
+                <div className="glass-card p-8 rounded-3xl border-t-4 border-t-pink-500 relative overflow-hidden group hover:-translate-y-2 transition-all duration-300">
+                    <div className="absolute -right-10 -top-10 opacity-10 group-hover:opacity-20 transition-opacity">
+                        <BarChart3 size={150} />
+                    </div>
+                    <p className="text-xs text-pink-400 font-bold uppercase tracking-widest mb-3 relative z-10">Quality Metric</p>
+                    <h4 className="text-2xl font-bold text-white mb-4 relative z-10">Defect Rate Monitoring</h4>
+                    <p className="text-text-secondary leading-relaxed relative z-10">
+                        The embedded dashboard indicates a stabilization phase. Defect rates in localized documentation show a downward trend over the previous 6 months.
+                    </p>
                 </div>
             </motion.div>
         </motion.div>

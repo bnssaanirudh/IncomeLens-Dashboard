@@ -1,19 +1,19 @@
 import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { User, Mail, Lock, AlertCircle } from 'lucide-react';
+import { UserPlus, Mail, Lock, User, Briefcase, Globe } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
 const Signup = () => {
-    const { register, handleSubmit, formState: { errors }, watch } = useForm();
+    const { register, handleSubmit, formState: { errors } } = useForm();
     const { signup } = useAuth();
     const navigate = useNavigate();
     const [authError, setAuthError] = useState('');
-    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     const onSubmit = async (data) => {
-        setIsSubmitting(true);
+        setIsLoading(true);
         setAuthError('');
 
         const result = await signup(data.name, data.email, data.password);

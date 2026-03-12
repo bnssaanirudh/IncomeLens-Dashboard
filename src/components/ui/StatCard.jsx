@@ -1,13 +1,12 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { TrendingDown, TrendingUp } from 'lucide-react';
 
 const StatCard = ({ title, value, icon: Icon, trend, subtext }) => {
+    const TrendIcon = trend > 0 ? TrendingUp : TrendingDown;
+
     return (
-        <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
+        <div
             className="glass-card p-6 relative overflow-hidden group cursor-pointer"
-            whileHover={{ y: -5, scale: 1.02 }}
             transition={{ type: "spring", stiffness: 300, damping: 20 }}
         >
             <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
@@ -27,14 +26,13 @@ const StatCard = ({ title, value, icon: Icon, trend, subtext }) => {
 
             <div className="flex items-center gap-2 mt-4 relative z-10">
                 {trend && (
-                    <span className={`text-xs font-semibold px-2 py-1 rounded-md ${trend > 0 ? 'bg-emerald-500/20 text-emerald-400' : 'bg-red-500/20 text-red-400'
-                        }`}>
+                    <span className={`text-xs font-semibold px-2 py-1 rounded-md ${trend > 0 ? 'bg-emerald-500/20 text-emerald-400' : 'bg-red-500/20 text-red-400'}`}>
                         {trend > 0 ? '+' : ''}{trend}%
                     </span>
                 )}
                 <span className="text-xs text-text-secondary">{subtext}</span>
             </div>
-        </motion.div>
+        </div>
     );
 };
 

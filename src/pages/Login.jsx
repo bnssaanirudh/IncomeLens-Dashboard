@@ -105,10 +105,25 @@ const Login = () => {
                 </button>
             </div>
 
-            <div className="mt-6 p-4 rounded-xl bg-white/5 border border-white/5 text-xs text-text-secondary/80 text-center">
-                <p>Demo Credentials:</p>
-                <p className="mt-1">Email: <span className="text-white font-mono">admin@incomelens.com</span></p>
-                <p>Password: <span className="text-white font-mono">admin123</span></p>
+            <div className="mt-6 p-4 rounded-xl bg-white/5 border border-white/5 text-xs text-text-secondary/80 text-left space-y-3">
+                <p className="font-bold text-center text-white mb-2 pb-2 border-b border-white/10 border-dashed">Demo Credentials:</p>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-2 text-center">
+                    <div>
+                        <span className="text-secondary font-bold block mb-1">Expert Role</span>
+                        <p>admin@incomelens.com</p>
+                        <p>admin123</p>
+                    </div>
+                    <div>
+                        <span className="text-green-400 font-bold block mb-1">Student Role</span>
+                        <p>student@incomelens.com</p>
+                        <p>student123</p>
+                    </div>
+                    <div>
+                        <span className="text-blue-400 font-bold block mb-1">General User</span>
+                        <p>user@incomelens.com</p>
+                        <p>user123</p>
+                    </div>
+                </div>
             </div>
         </motion.div>
     );

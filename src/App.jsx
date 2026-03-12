@@ -14,6 +14,10 @@ import Signup from './pages/Signup';
 import DashboardOverview from './pages/DashboardOverview';
 import GlobalExplorer from './pages/GlobalExplorer';
 import CountryAnalysis from './pages/CountryAnalysis';
+import FeedbackPage from './pages/FeedbackPage';
+
+// Context
+import { ScenarioProvider } from './context/ScenarioContext';
 
 function App() {
   return (
@@ -28,10 +32,15 @@ function App() {
       </Route>
 
       {/* Protected Dashboard Routes */}
-      <Route path="/dashboard" element={<DashboardLayout />}>
+      <Route path="/dashboard" element={
+        <ScenarioProvider>
+          <DashboardLayout />
+        </ScenarioProvider>
+      }>
         <Route index element={<DashboardOverview />} />
         <Route path="global" element={<GlobalExplorer />} />
         <Route path="country" element={<CountryAnalysis />} />
+        <Route path="feedback" element={<FeedbackPage />} />
       </Route>
 
       {/* Catch-all redirect */}

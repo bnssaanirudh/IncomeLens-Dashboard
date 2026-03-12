@@ -6,7 +6,8 @@ import {
     Map,
     Settings,
     LogOut,
-    TrendingUp
+    TrendingUp,
+    MessageSquare
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 
@@ -17,6 +18,7 @@ const Sidebar = () => {
         { path: '/dashboard', icon: LayoutDashboard, label: 'Overview' },
         { path: '/dashboard/global', icon: Globe2, label: 'Global Explorer' },
         { path: '/dashboard/country', icon: Map, label: 'Country Analysis' },
+        { path: '/dashboard/feedback', icon: MessageSquare, label: 'Feedback' },
     ];
 
     return (

@@ -9,14 +9,18 @@ const PowerBIEmbed = ({
         <div className="glass-panel overflow-hidden w-full relative">
             <div className="absolute inset-0 border-2 border-primary/20 rounded-2xl pointer-events-none z-10"></div>
             {embedUrl ? (
-                <iframe
-                    title={title}
-                    width="100%"
-                    height={height}
-                    src={embedUrl}
-                    allowFullScreen={true}
-                    className="border-none w-full bg-black/40 mix-blend-screen"
-                ></iframe>
+                <div className="relative w-full rounded-[1.4rem] overflow-hidden shadow-2xl bg-black/40" style={{ height }}>
+                    <iframe
+                        title={title}
+                        width="100%"
+                        height="100%"
+                        src={embedUrl.includes('app.powerbi.com/view') ? `${embedUrl}&navContentPaneEnabled=false&filterPaneEnabled=false` : embedUrl}
+                        allowFullScreen={true}
+                        allow="fullscreen"
+                        className="border-none w-full bg-transparent transition-opacity duration-500 opacity-100"
+                        style={{ height: `calc(${height} + 66px)`, borderRadius: '1.4rem' }}
+                    ></iframe>
+                </div>
             ) : (
                 <div
                     className="w-full flex flex-col items-center justify-center bg-black/20 text-text-secondary"

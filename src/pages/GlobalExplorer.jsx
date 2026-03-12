@@ -1,8 +1,22 @@
 import React from 'react';
 import PowerBIEmbed from '../components/ui/PowerBIEmbed';
 import { motion } from 'framer-motion';
+import { Globe, MapPin, Navigation, Compass } from 'lucide-react';
+import html2pdf from 'html2pdf.js';
 
 const GlobalExplorer = () => {
+    const handleExportPDF = () => {
+        const element = document.getElementById('global-explorer-content');
+        const opt = {
+            margin: 0.5,
+            filename: 'Global-Explorer-Report.pdf',
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2, useCORS: true },
+            jsPDF: { unit: 'in', format: 'letter', orientation: 'landscape' }
+        };
+        html2pdf().set(opt).from(element).save();
+    };
+
     const containerVariants = {
         hidden: { opacity: 0 },
         visible: {
@@ -18,88 +32,80 @@ const GlobalExplorer = () => {
 
     return (
         <motion.div
-            className="space-y-6"
+            id="global-explorer-content"
+            className="space-y-8"
             variants={containerVariants}
             initial="hidden"
             animate="visible"
         >
-            <motion.div variants={itemVariants} className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 mb-4">
+            <motion.div variants={itemVariants} className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
                 <div>
-                    <h2 className="text-3xl font-bold text-white tracking-tight flex items-center gap-3">
+                    <h2 className="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-500 tracking-tight flex items-center gap-3">
                         Global Explorer
-                        <span className="relative flex h-3 w-3">
-                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
-                            <span className="relative inline-flex rounded-full h-3 w-3 bg-blue-500"></span>
-                        </span>
+                        <Globe className="text-cyan-400 animate-[spin_10s_linear_infinite]" size={32} />
                     </h2>
-                    <p className="text-text-secondary mt-1">Interactive geographic visualization of economic disparities</p>
+                    <p className="text-text-secondary mt-2 text-lg">Interactive geographic intelligence and regional breakdown</p>
+                </div>
+                <div className="flex gap-3">
+                    <button onClick={handleExportPDF} className="px-6 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white font-medium text-sm hover:bg-white/10 transition-all hover:shadow-[0_0_20px_rgba(255,255,255,0.15)] backdrop-blur-md">Export PDF</button>
                 </div>
             </motion.div>
 
-            <motion.div variants={itemVariants} className="glass-card p-2 rounded-2xl overflow-hidden shadow-[0_0_30px_rgba(59,130,246,0.1)] border border-primary/20 relative group">
-                <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-secondary/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
-                <PowerBIEmbed
-                    title="Global Income Heatmap"
-                    height="700px"
-                />
-            </motion.div>
-
-            <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-                <div className="glass-panel p-6 relative overflow-hidden group hover:-translate-y-1 transition-transform duration-300">
-                    <div className="absolute top-0 right-0 w-32 h-32 bg-primary/10 rounded-full blur-2xl group-hover:bg-primary/20 transition-colors"></div>
-                    <h3 className="text-xl font-semibold text-white mb-4">Regional Summary</h3>
-                    <p className="text-text-secondary leading-relaxed mb-4">
-                        The visualization above integrates vast datasets mapping income disparities across key economic zones. Notable shifts are observed in the Asia-Pacific territory, displaying a 6% increase in middle-income expansion.
-                    </p>
-                    <div className="space-y-3">
-                        <div className="flex justify-between items-center bg-white/5 p-3 rounded-lg border border-white/5">
-                            <span className="text-text-secondary">North America</span>
-                            <span className="text-white font-medium">+1.2% growth</span>
-                        </div>
-                        <div className="flex justify-between items-center bg-white/5 p-3 rounded-lg border border-white/5">
-                            <span className="text-text-secondary">Europe</span>
-                            <span className="text-white font-medium">-0.4% contraction</span>
-                        </div>
-                        <div className="flex justify-between items-center bg-white/5 p-3 rounded-lg border border-white/5 border-l-4 border-l-primary/50">
-                            <span className="text-white">Asia Pacific</span>
-                            <span className="text-emerald-400 font-medium">+6.1% growth</span>
-                        </div>
+            <motion.div variants={itemVariants} className="relative group rounded-3xl p-1 bg-gradient-to-tr from-emerald-500/20 to-cyan-500/20">
+                <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/20 to-cyan-500/20 rounded-3xl blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+                <div className="relative glass-card rounded-[1.4rem] overflow-hidden shadow-2xl border border-white/10 bg-black/40 backdrop-blur-xl">
+                    <div className="p-4 border-b border-white/5 flex items-center gap-3">
+                        <Compass className="text-emerald-400" size={20} />
+                        <span className="text-sm font-bold text-white tracking-widest uppercase">Geospatial Intelligence</span>
+                    </div>
+                    <div className="p-2">
+                        <PowerBIEmbed
+                            title="Global Map Dashboard"
+                            height="700px"
+                            embedUrl="https://app.powerbi.com/view?r=eyJrIjoiMTMyNDk0ZjItODQwNS00N2E1LTg0NTQtYTg0YWU5MjVkZTQ3IiwidCI6IjgwOGNjODNlLWE1NDYtNDdlNy1hMDNmLTczYTFlYmJhMjRmMyIsImMiOjEwfQ%3D%3D&pageName=fe828f4aad5b98599b54"
+                        />
                     </div>
                 </div>
+            </motion.div>
 
-                <div className="glass-panel p-6 relative overflow-hidden group hover:-translate-y-1 transition-transform duration-300">
-                    <div className="absolute bottom-0 left-0 w-32 h-32 bg-secondary/10 rounded-full blur-2xl group-hover:bg-secondary/20 transition-colors"></div>
-                    <h3 className="text-xl font-semibold text-white mb-4 relative z-10">Data Quality Index</h3>
-                    <div className="flex flex-col h-full justify-between pb-6">
-                        <div className="relative w-48 h-48 mx-auto mt-4">
-                            <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
-                                <circle cx="50" cy="50" r="40" stroke="rgba(255,255,255,0.1)" strokeWidth="12" fill="none" />
-                                <circle
-                                    cx="50"
-                                    cy="50"
-                                    r="40"
-                                    stroke="url(#gradient)"
-                                    strokeWidth="12"
-                                    fill="none"
-                                    strokeDasharray="251.2"
-                                    strokeDashoffset="15.072"
-                                    className="transition-all duration-1000 ease-out drop-shadow-[0_0_8px_rgba(59,130,246,0.8)]"
-                                />
-                                <defs>
-                                    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                                        <stop offset="0%" stopColor="#3b82f6" />
-                                        <stop offset="100%" stopColor="#8b5cf6" />
-                                    </linearGradient>
-                                </defs>
-                            </svg>
-                            <div className="absolute inset-0 flex flex-col items-center justify-center">
-                                <span className="text-3xl font-bold text-white">94%</span>
-                                <span className="text-xs text-text-secondary mt-1 tracking-wider uppercase">Confidence</span>
-                            </div>
+            <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="glass-panel p-8 relative overflow-hidden group hover:-translate-y-2 transition-transform duration-500 rounded-3xl border border-white/5">
+                    <div className="absolute top-0 right-0 w-48 h-48 bg-emerald-500/10 rounded-full blur-3xl group-hover:bg-emerald-500/20 transition-colors"></div>
+                    <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-emerald-400 to-cyan-500 flex items-center justify-center text-white mb-6 shadow-lg shadow-emerald-500/30">
+                        <Navigation size={24} />
+                    </div>
+                    <h3 className="text-2xl font-bold text-white mb-3">Global Compliance Mapping</h3>
+                    <p className="text-text-secondary leading-relaxed">
+                        In-depth analysis of international compliance reveals significant improvements in audit completion rates, driving a secure operational framework across regions.
+                    </p>
+                </div>
+
+                <div className="glass-panel p-8 relative overflow-hidden group hover:-translate-y-2 transition-transform duration-500 rounded-3xl border border-white/5 md:col-span-2">
+                    <div className="absolute bottom-0 left-0 w-64 h-64 bg-cyan-500/10 rounded-full blur-3xl group-hover:bg-cyan-500/20 transition-colors"></div>
+                    <h3 className="text-2xl font-bold text-white mb-6 relative z-10 flex items-center gap-2">
+                        <MapPin className="text-cyan-400" /> Geographic Risk Insights
+                    </h3>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 relative z-10">
+                        <div className="bg-white/5 border border-white/10 rounded-2xl p-5 hover:bg-white/10 transition-colors">
+                            <span className="block text-cyan-400 text-sm font-bold uppercase tracking-wider mb-2">North America</span>
+                            <span className="block text-white text-xl font-medium mb-1">Low Risk</span>
+                            <span className="text-text-secondary text-sm">Consistent audit adherence with &lt;1% defect rate.</span>
                         </div>
-                        <p className="text-sm text-center text-text-secondary mt-6 relative z-10">
-                            Based on aggregated real-time socio-economic census data streams.
-                        </p>
+                        <div className="bg-white/5 border border-white/10 rounded-2xl p-5 hover:bg-white/10 transition-colors">
+                            <span className="block text-emerald-400 text-sm font-bold uppercase tracking-wider mb-2">Asia Pacific</span>
+                            <span className="block text-white text-xl font-medium mb-1">Improving Compliance</span>
+                            <span className="text-text-secondary text-sm">Surpassing expectations with an 18% drop in flagged issues.</span>
+                        </div>
+                        <div className="bg-white/5 border border-white/10 rounded-2xl p-5 hover:bg-white/10 transition-colors">
+                            <span className="block text-purple-400 text-sm font-bold uppercase tracking-wider mb-2">Europe</span>
+                            <span className="block text-white text-xl font-medium mb-1">Stringent Governance</span>
+                            <span className="text-text-secondary text-sm">Focusing on GDPR and enhanced financial data screening.</span>
+                        </div>
+                        <div className="bg-white/5 border border-white/10 rounded-2xl p-5 hover:bg-white/10 transition-colors">
+                            <span className="block text-orange-400 text-sm font-bold uppercase tracking-wider mb-2">Latin America</span>
+                            <span className="block text-white text-xl font-medium mb-1">Monitored Risk</span>
+                            <span className="text-text-secondary text-sm">High vigilance zones with targeted NLP risk assessment deployment.</span>
+                        </div>
                     </div>
                 </div>
             </motion.div>

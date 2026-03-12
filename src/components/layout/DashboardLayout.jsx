@@ -3,6 +3,7 @@ import { Outlet, Navigate } from 'react-router-dom';
 import Sidebar from './Sidebar';
 import Navbar from './Navbar';
 import { useAuth } from '../../context/AuthContext';
+import ChatbotWidget from '../ui/ChatbotWidget';
 
 const DashboardLayout = () => {
     const { isAuthenticated, isLoading } = useAuth();
@@ -40,6 +41,7 @@ const DashboardLayout = () => {
                     <Outlet />
                 </main>
             </div>
+            <ChatbotWidget />
         </div>
     );
 };
