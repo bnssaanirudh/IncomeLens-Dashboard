@@ -4,235 +4,260 @@ import { TrendingUp, Globe2, BarChart3, ShieldCheck, ArrowRight } from 'lucide-r
 import { motion } from 'framer-motion';
 
 const Landing = () => {
-return ( <div className="min-h-screen bg-background text-text-primary overflow-hidden">
+return (
 
-```
-        {/* Background Orbs */}
-        <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] bg-primary/20 rounded-full blur-[150px] mix-blend-screen pointer-events-none" />
-        <div className="absolute bottom-[-20%] right-[-10%] w-[50%] h-[50%] bg-secondary/20 rounded-full blur-[150px] mix-blend-screen pointer-events-none" />
+<div className="min-h-screen bg-background text-text-primary overflow-hidden">
 
-        {/* Navigation */}
-        <nav className="glass-panel rounded-none border-t-0 border-x-0 sticky top-0 z-50 px-6 py-4 flex justify-between items-center">
-            <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center text-white font-bold shadow-[0_0_20px_rgba(59,130,246,0.6)]">
-                    <TrendingUp size={24} />
-                </div>
-                <span className="text-2xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">
-                    IncomeLens
-                </span>
-            </div>
+{/* Background Orbs */}
 
-            <div className="flex gap-4">
-                <Link to="/login" className="px-6 py-2.5 rounded-xl text-white font-medium hover:bg-white/5 transition-colors">
-                    Sign In
-                </Link>
-                <Link to="/signup" className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-primary to-secondary text-white font-medium hover:scale-105 transition-transform shadow-[0_0_20px_rgba(59,130,246,0.5)]">
-                    Get Started
-                </Link>
-            </div>
-        </nav>
+<div className="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] bg-primary/20 rounded-full blur-[150px] mix-blend-screen pointer-events-none" />
+<div className="absolute bottom-[-20%] right-[-10%] w-[50%] h-[50%] bg-secondary/20 rounded-full blur-[150px] mix-blend-screen pointer-events-none" />
 
-        {/* Hero Section */}
-        <main className="max-w-7xl mx-auto px-6 pt-24 pb-32 text-center relative z-10">
+{/* Navigation */}
 
-            <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8 }}
-            >
-                <h1 className="text-6xl md:text-8xl font-extrabold tracking-tighter text-white mb-8">
-                    Visualize inequality.<br />
-                    <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-indigo-500 to-purple-500">
-                        Drive change.
-                    </span>
-                </h1>
+<nav className="glass-panel rounded-none border-t-0 border-x-0 sticky top-0 z-50 px-6 py-4 flex justify-between items-center">
+<div className="flex items-center gap-3">
+<div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center text-white font-bold shadow-[0_0_20px_rgba(59,130,246,0.6)]">
+<TrendingUp size={24} />
+</div>
+<span className="text-2xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">
+IncomeLens
+</span>
+</div>
 
-                <p className="text-xl md:text-2xl text-text-secondary max-w-3xl mx-auto mb-12 leading-relaxed">
-                    The premium analytics platform for structural economic analysis. 
-                    Transform complex inequality data into clear, actionable insights 
-                    through interactive dashboards and powerful visualizations.
-                </p>
+<div className="flex gap-4">
+<Link to="/login" className="px-6 py-2.5 rounded-xl text-white font-medium hover:bg-white/5 transition-colors">
+Sign In
+</Link>
 
-                <div className="flex flex-col sm:flex-row justify-center gap-6">
-                    <Link to="/signup" className="flex justify-center items-center gap-2 px-8 py-4 rounded-full bg-white text-black font-bold text-lg hover:bg-gray-200 transition-colors">
-                        Start Exploring <ArrowRight size={20} />
-                    </Link>
+<Link to="/signup" className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-primary to-secondary text-white font-medium hover:scale-105 transition-transform shadow-[0_0_20px_rgba(59,130,246,0.5)]">
+Get Started
+</Link>
+</div>
+</nav>
 
-                    <Link to="/login" className="flex justify-center items-center gap-2 px-8 py-4 rounded-full glass-panel text-white font-bold text-lg hover:bg-white/10 transition-colors">
-                        View Demo
-                    </Link>
-                </div>
-            </motion.div>
+{/* Hero Section */}
 
+<main className="max-w-7xl mx-auto px-6 pt-24 pb-32 text-center relative z-10">
 
-            {/* Project Goal */}
-            <motion.section
-                initial={{ opacity: 0, y: 40 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.1 }}
-                className="max-w-5xl mx-auto mt-24 text-center"
-            >
-                <h2 className="text-4xl font-bold text-white mb-6">
-                    Project Goal
-                </h2>
+<motion.div
+initial={{ opacity: 0, y: 30 }}
+animate={{ opacity: 1, y: 0 }}
+transition={{ duration: 0.8 }}
 
-                <p className="text-text-secondary text-lg leading-relaxed">
-                    This project aims to analyze global income inequality by exploring 
-                    economic indicators such as the Gini Index, GDP per capita, poverty rate, 
-                    and income distribution across countries and regions. The platform 
-                    enables users to interactively explore inequality patterns and better 
-                    understand how economic development relates to income distribution.
-                </p>
-            </motion.section>
+>
 
+<h1 className="text-6xl md:text-8xl font-extrabold tracking-tighter text-white mb-8">
+Visualize inequality.<br />
+<span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-indigo-500 to-purple-500">
+Drive change.
+</span>
+</h1>
 
-            {/* Dataset Used */}
-            <motion.section
-                initial={{ opacity: 0, y: 40 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.15 }}
-                className="max-w-6xl mx-auto mt-20 text-center"
-            >
-                <h2 className="text-4xl font-bold text-white mb-6">
-                    Dataset Used
-                </h2>
+<p className="text-xl md:text-2xl text-text-secondary max-w-3xl mx-auto mb-12 leading-relaxed">
+The premium analytics platform for structural economic analysis.
+Transform complex inequality data into clear, actionable insights
+through interactive dashboards and powerful visualizations.
+</p>
 
-                <p className="text-text-secondary text-lg leading-relaxed">
-                    The analysis uses a comprehensive global inequality dataset containing 
-                    indicators such as Gini Index, GDP per capita, GDP growth rate, poverty rate, 
-                    Palma Ratio, economic stability index, development gap, population statistics, 
-                    and income shares of the Top 10%, Middle 50%, and Bottom 20% across multiple 
-                    countries and years.
-                </p>
-            </motion.section>
+<div className="flex flex-col sm:flex-row justify-center gap-6">
 
+<Link to="/signup" className="flex justify-center items-center gap-2 px-8 py-4 rounded-full bg-white text-black font-bold text-lg hover:bg-gray-200 transition-colors">
+Start Exploring <ArrowRight size={20} />
+</Link>
 
-            {/* Feature Grid */}
-            <motion.div
-                initial={{ opacity: 0, y: 40 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.2 }}
-                className="grid md:grid-cols-3 gap-8 mt-32 text-left"
-            >
-                <div className="glass-card p-8">
-                    <Globe2 className="text-blue-400 mb-6" size={40} />
-                    <h3 className="text-2xl font-bold text-white mb-4">Global Perspective</h3>
-                    <p className="text-text-secondary leading-relaxed">
-                        Explore macro-economic inequality trends across regions and continents 
-                        using interactive maps and regional analysis tools.
-                    </p>
-                </div>
+<Link to="/login" className="flex justify-center items-center gap-2 px-8 py-4 rounded-full glass-panel text-white font-bold text-lg hover:bg-white/10 transition-colors">
+View Demo
+</Link>
 
-                <div className="glass-card p-8 relative overflow-hidden group">
-                    <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-secondary/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+</div>
+</motion.div>
 
-                    <BarChart3 className="text-purple-400 mb-6 relative z-10" size={40} />
-                    <h3 className="text-2xl font-bold text-white mb-4 relative z-10">Deep Analytics</h3>
+{/* Project Goal */}
+<motion.section
+initial={{ opacity: 0, y: 40 }}
+animate={{ opacity: 1, y: 0 }}
+transition={{ duration: 0.8, delay: 0.1 }}
+className="max-w-5xl mx-auto mt-24 text-center"
 
-                    <p className="text-text-secondary leading-relaxed relative z-10">
-                        Perform advanced analysis of income distribution, inequality pressure, 
-                        and development indicators through powerful visualization tools.
-                    </p>
-                </div>
+>
 
-                <div className="glass-card p-8">
-                    <ShieldCheck className="text-emerald-400 mb-6" size={40} />
-                    <h3 className="text-2xl font-bold text-white mb-4">Reliable Insights</h3>
-                    <p className="text-text-secondary leading-relaxed">
-                        Generate meaningful insights from economic data that support research, 
-                        policy planning, and global development analysis.
-                    </p>
-                </div>
-            </motion.div>
+<h2 className="text-4xl font-bold text-white mb-6">
+Project Goal
+</h2>
 
+<p className="text-text-secondary text-lg leading-relaxed">
+This project aims to analyze global income inequality by exploring
+economic indicators such as the Gini Index, GDP per capita, poverty rate,
+and income distribution across countries and regions. The platform
+enables users to interactively explore inequality patterns and better
+understand how economic development relates to income distribution.
+</p>
 
-            {/* Platform Features */}
-            <motion.section
-                initial={{ opacity: 0, y: 40 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.3 }}
-                className="max-w-6xl mx-auto mt-24"
-            >
-                <h2 className="text-4xl font-bold text-white text-center mb-12">
-                    Platform Features
-                </h2>
+</motion.section>
 
-                <div className="grid md:grid-cols-2 gap-8 text-left">
+{/* Dataset Used */}
+<motion.section
+initial={{ opacity: 0, y: 40 }}
+animate={{ opacity: 1, y: 0 }}
+transition={{ duration: 0.8, delay: 0.15 }}
+className="max-w-6xl mx-auto mt-20 text-center"
 
-                    <div className="glass-card p-6">
-                        <h4 className="text-xl font-semibold text-white mb-2">
-                            Interactive Dashboards
-                        </h4>
-                        <p className="text-text-secondary">
-                            Visualize inequality trends using dynamic charts and real-time filters.
-                        </p>
-                    </div>
+>
 
-                    <div className="glass-card p-6">
-                        <h4 className="text-xl font-semibold text-white mb-2">
-                            Country Comparison
-                        </h4>
-                        <p className="text-text-secondary">
-                            Compare economic indicators across countries to understand regional disparities.
-                        </p>
-                    </div>
+<h2 className="text-4xl font-bold text-white mb-6">
+Dataset Used
+</h2>
 
-                    <div className="glass-card p-6">
-                        <h4 className="text-xl font-semibold text-white mb-2">
-                            Global Data Explorer
-                        </h4>
-                        <p className="text-text-secondary">
-                            Explore inequality datasets interactively with powerful search and filters.
-                        </p>
-                    </div>
+<p className="text-text-secondary text-lg leading-relaxed">
+The analysis uses a comprehensive global inequality dataset containing
+indicators such as Gini Index, GDP per capita, GDP growth rate, poverty rate,
+Palma Ratio, economic stability index, development gap, population statistics,
+and income shares of the Top 10%, Middle 50%, and Bottom 20% across multiple
+countries and years.
+</p>
 
-                    <div className="glass-card p-6">
-                        <h4 className="text-xl font-semibold text-white mb-2">
-                            Insight Generation
-                        </h4>
-                        <p className="text-text-secondary">
-                            Identify patterns between poverty, economic growth, and income distribution.
-                        </p>
-                    </div>
+</motion.section>
 
-                </div>
-            </motion.section>
+{/* Feature Grid */}
+<motion.div
+initial={{ opacity: 0, y: 40 }}
+animate={{ opacity: 1, y: 0 }}
+transition={{ duration: 0.8, delay: 0.2 }}
+className="grid md:grid-cols-3 gap-8 mt-32 text-left"
 
+>
 
-            {/* Team Members */}
-            <motion.section
-                initial={{ opacity: 0, y: 40 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.35 }}
-                className="max-w-5xl mx-auto mt-28 text-center"
-            >
-                <h2 className="text-4xl font-bold text-white mb-10">
-                    Meet the Team
-                </h2>
+<div className="glass-card p-8">
+<Globe2 className="text-blue-400 mb-6" size={40} />
+<h3 className="text-2xl font-bold text-white mb-4">Global Perspective</h3>
+<p className="text-text-secondary leading-relaxed">
+Explore macro-economic inequality trends across regions and continents
+using interactive maps and regional analysis tools.
+</p>
+</div>
 
-                <div className="grid grid-cols-2 md:grid-cols-5 gap-6">
+<div className="glass-card p-8 relative overflow-hidden group">
+<div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-secondary/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
 
-                    {["Anirudh", "Samruddhi", "Tejaswi", "Riya", "Phalguni"].map((member) => (
-                        <div key={member} className="glass-card p-4 text-center">
-                            <p className="text-white font-semibold">{member}</p>
-                        </div>
-                    ))}
+<BarChart3 className="text-purple-400 mb-6 relative z-10" size={40} />
 
-                </div>
-            </motion.section>
+<h3 className="text-2xl font-bold text-white mb-4 relative z-10">
+Deep Analytics
+</h3>
 
-        </main>
+<p className="text-text-secondary leading-relaxed relative z-10">
+Perform advanced analysis of income distribution, inequality pressure,
+and development indicators through powerful visualization tools.
+</p>
+</div>
 
+<div className="glass-card p-8">
+<ShieldCheck className="text-emerald-400 mb-6" size={40} />
 
-        {/* Footer */}
-        <footer className="mt-24 py-8 text-center text-text-secondary border-t border-white/10">
-            <p>© 2026 IncomeLens — Global Inequality Analytics Platform</p>
-        </footer>
+<h3 className="text-2xl font-bold text-white mb-4">
+Reliable Insights
+</h3>
 
-    </div>
+<p className="text-text-secondary leading-relaxed">
+Generate meaningful insights from economic data that support research,
+policy planning, and global development analysis.
+</p>
+
+</div>
+</motion.div>
+
+{/* Platform Features */}
+<motion.section
+initial={{ opacity: 0, y: 40 }}
+animate={{ opacity: 1, y: 0 }}
+transition={{ duration: 0.8, delay: 0.3 }}
+className="max-w-6xl mx-auto mt-24"
+
+>
+
+<h2 className="text-4xl font-bold text-white text-center mb-12">
+Platform Features
+</h2>
+
+<div className="grid md:grid-cols-2 gap-8 text-left">
+
+<div className="glass-card p-6">
+<h4 className="text-xl font-semibold text-white mb-2">
+Interactive Dashboards
+</h4>
+<p className="text-text-secondary">
+Visualize inequality trends using dynamic charts and real-time filters.
+</p>
+</div>
+
+<div className="glass-card p-6">
+<h4 className="text-xl font-semibold text-white mb-2">
+Country Comparison
+</h4>
+<p className="text-text-secondary">
+Compare economic indicators across countries to understand regional disparities.
+</p>
+</div>
+
+<div className="glass-card p-6">
+<h4 className="text-xl font-semibold text-white mb-2">
+Global Data Explorer
+</h4>
+<p className="text-text-secondary">
+Explore inequality datasets interactively with powerful search and filters.
+</p>
+</div>
+
+<div className="glass-card p-6">
+<h4 className="text-xl font-semibold text-white mb-2">
+Insight Generation
+</h4>
+<p className="text-text-secondary">
+Identify patterns between poverty, economic growth, and income distribution.
+</p>
+</div>
+
+</div>
+
+</motion.section>
+
+{/* Team Members */}
+<motion.section
+initial={{ opacity: 0, y: 40 }}
+animate={{ opacity: 1, y: 0 }}
+transition={{ duration: 0.8, delay: 0.35 }}
+className="max-w-5xl mx-auto mt-28 text-center"
+
+>
+
+<h2 className="text-4xl font-bold text-white mb-10">
+Meet the Team
+</h2>
+
+<div className="grid grid-cols-2 md:grid-cols-5 gap-6">
+
+{["Anirudh","Samruddhi","Tejaswi","Riya","Phalguni"].map((member) => (
+
+<div key={member} className="glass-card p-4 text-center">
+<p className="text-white font-semibold">{member}</p>
+</div>
+))}
+
+</div>
+
+</motion.section>
+
+</main>
+
+{/* Footer */}
+
+<footer className="mt-24 py-8 text-center text-text-secondary border-t border-white/10">
+<p>© 2026 IncomeLens — Global Inequality Analytics Platform</p>
+</footer>
+
+</div>
 );
-```
-
 };
 
 export default Landing;
