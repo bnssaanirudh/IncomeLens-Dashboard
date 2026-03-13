@@ -5,6 +5,69 @@ import { useScenario } from '../../context/ScenarioContext';
 import { useAuth } from '../../context/AuthContext';
 import { getGroqChatCompletion } from '../../services/groqService';
 
+// Format message text with better styling
+const formatMessage = (text) => {
+    if (!text) return null;
+    
+    // Split by double newlines for paragraphs
+    const paragraphs = text.split('\n\n');
+    
+    return paragraphs.map((paragraph, pIndex) => {
+        // Check if it's a bullet point list
+        const lines = paragraph.split('\n');
+        const isList = lines.some(line => line.trim().match(/^[-•*]\s/));
+        
+        if (isList) {
+            return (
+                <ul key={pIndex} className="space-y-1.5 my-2 pl-4">
+                    {lines.map((line, lIndex) => {
+                        const cleanLine = line.trim().replace(/^[-•*]\s/, '');
+                        if (!cleanLine) return null;
+                        return (
+                            <li key={lIndex} className="flex items-start gap-2">
+                                <span className="text-blue-400 mt-1">•</span>
+                                <span className="flex-1">{cleanLine}</span>
+                            </li>
+                        );
+                    })}
+                </ul>
+            );
+        }
+        
+        // Check if it's a numbered list
+        const isNumberedList = lines.some(line => line.trim().match(/^\d+\.\s/));
+        if (isNumberedList) {
+            return (
+                <ol key={pIndex} className="space-y-1.5 my-2 pl-4 list-decimal list-inside">
+                    {lines.map((line, lIndex) => {
+                        const cleanLine = line.trim().replace(/^\d+\.\s/, '');
+                        if (!cleanLine) return null;
+                        return (
+                            <li key={lIndex} className="ml-2">
+                                {cleanLine}
+                            </li>
+                        );
+                    })}
+                </ol>
+            );
+        }
+        
+        // Regular paragraph with bold text support
+        const formattedParagraph = paragraph.split(/(\*\*.*?\*\*)/g).map((part, index) => {
+            if (part.startsWith('**') && part.endsWith('**')) {
+                return <strong key={index} className="font-bold text-white">{part.slice(2, -2)}</strong>;
+            }
+            return part;
+        });
+        
+        return (
+            <p key={pIndex} className={pIndex > 0 ? 'mt-3' : ''}>
+                {formattedParagraph}
+            </p>
+        );
+    });
+};
+
 const ChatbotWidget = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [isExpanded, setIsExpanded] = useState(false);
@@ -112,8 +175,21 @@ const ChatbotWidget = () => {
                         <div className="flex-1 overflow-y-auto p-4 space-y-4">
                             {messages.map((msg) => (
                                 <div key={msg.id} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
-                                    <div className={`max-w-[85%] rounded-2xl p-3 text-sm ${msg.sender === 'user' ? 'bg-primary text-white rounded-tr-sm' : msg.isAlert ? 'bg-red-500/20 border border-red-500/30 text-red-100 rounded-tl-sm' : 'bg-white/10 border border-white/5 text-white rounded-tl-sm'}`}>
-                                        {msg.text}
+                                    <div className={`max-w-[85%] rounded-2xl p-3.5 text-sm leading-relaxed ${msg.sender === 'user' ? 'bg-primary text-white rounded-tr-sm' : msg.isAlert ? 'bg-red-500/20 border border-red-500/30 text-red-100 rounded-tl-sm' : 'bg-white/10 border border-white/5 text-white rounded-tl-sm'}`}>
+                                        {msg.isLoading ? (
+                                            <div className="flex items-center gap-2">
+                                                <div className="flex gap-1">
+                                                    <span className="w-2 h-2 bg-white/60 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></span>
+                                                    <span className="w-2 h-2 bg-white/60 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></span>
+                                                    <span className="w-2 h-2 bg-white/60 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></span>
+                                                </div>
+                                                <span className="text-white/70">{msg.text}</span>
+                                            </div>
+                                        ) : (
+                                            <div className="whitespace-pre-wrap break-words">
+                                                {formatMessage(msg.text)}
+                                            </div>
+                                        )}
                                     </div>
                                 </div>
                             ))}
