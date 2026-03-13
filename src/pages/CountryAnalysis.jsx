@@ -17,6 +17,44 @@ const CountryAnalysis = () => {
         html2pdf().set(opt).from(element).save();
     };
 
+    const analysisCards = [
+        {
+            id: 1,
+            category: 'Audit Compliance',
+            title: 'Regional Audit Status',
+            description: 'Detailed breakdown correlates local risk factors with direct improvements in overall audit and compliance accuracy.',
+            icon: BookOpen,
+            borderClass: 'border-t-orange-500',
+            categoryTextClass: 'text-orange-400'
+        },
+        {
+            id: 2,
+            category: 'Data Assurance',
+            title: 'NLP Risk Analysis',
+            description: 'Advanced NLP model processing of regional financial documents shows a 15% increase in automated fraud detection accuracy.',
+            icon: Building2,
+            borderClass: 'border-t-rose-500',
+            categoryTextClass: 'text-rose-400'
+        },
+        {
+            id: 3,
+            category: 'Quality Metric',
+            title: 'Defect Rate Monitoring',
+            description: 'The embedded dashboard indicates a stabilization phase. Defect rates in localized documentation show a downward trend over the previous 6 months.',
+            icon: BarChart3,
+            borderClass: 'border-t-pink-500',
+            categoryTextClass: 'text-pink-400'
+        }
+    ];
+
+    const countries = [
+        'United States - Analysis',
+        'United Kingdom - Analysis',
+        'Germany - Analysis',
+        'India - Analysis',
+        'Brazil - Analysis'
+    ];
+
     const containerVariants = {
         hidden: { opacity: 0 },
         visible: {
@@ -53,11 +91,9 @@ const CountryAnalysis = () => {
                         <div className="relative glass-panel border border-white/20 p-1.5 rounded-xl flex items-center bg-black/50 backdrop-blur-xl">
                             <Search className="text-text-secondary ml-3 mr-2" size={18} />
                             <select className="flex-1 bg-transparent text-white font-medium border-none outline-none py-2 px-2 appearance-none cursor-pointer">
-                                <option className="bg-background text-white">United States - Analysis</option>
-                                <option className="bg-background text-white">United Kingdom - Analysis</option>
-                                <option className="bg-background text-white">Germany - Analysis</option>
-                                <option className="bg-background text-white">India - Analysis</option>
-                                <option className="bg-background text-white">Brazil - Analysis</option>
+                                {countries.map((country, index) => (
+                                    <option key={index} className="bg-background text-white">{country}</option>
+                                ))}
                             </select>
                         </div>
                     </div>
@@ -85,38 +121,21 @@ const CountryAnalysis = () => {
             </motion.div>
 
             <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div className="glass-card p-8 rounded-3xl border-t-4 border-t-orange-500 relative overflow-hidden group hover:-translate-y-2 transition-all duration-300">
-                    <div className="absolute -right-10 -top-10 opacity-10 group-hover:opacity-20 transition-opacity">
-                        <BookOpen size={150} />
-                    </div>
-                    <p className="text-xs text-orange-400 font-bold uppercase tracking-widest mb-3 relative z-10">Audit Compliance</p>
-                    <h4 className="text-2xl font-bold text-white mb-4 relative z-10">Regional Audit Status</h4>
-                    <p className="text-text-secondary leading-relaxed relative z-10">
-                        Detailed breakdown correlates local risk factors with direct improvements in overall audit and compliance accuracy.
-                    </p>
-                </div>
-
-                <div className="glass-card p-8 rounded-3xl border-t-4 border-t-rose-500 relative overflow-hidden group hover:-translate-y-2 transition-all duration-300">
-                    <div className="absolute -right-10 -top-10 opacity-10 group-hover:opacity-20 transition-opacity">
-                        <Building2 size={150} />
-                    </div>
-                    <p className="text-xs text-rose-400 font-bold uppercase tracking-widest mb-3 relative z-10">Data Assurance</p>
-                    <h4 className="text-2xl font-bold text-white mb-4 relative z-10">NLP Risk Analysis</h4>
-                    <p className="text-text-secondary leading-relaxed relative z-10">
-                        Advanced NLP model processing of regional financial documents shows a 15% increase in automated fraud detection accuracy.
-                    </p>
-                </div>
-
-                <div className="glass-card p-8 rounded-3xl border-t-4 border-t-pink-500 relative overflow-hidden group hover:-translate-y-2 transition-all duration-300">
-                    <div className="absolute -right-10 -top-10 opacity-10 group-hover:opacity-20 transition-opacity">
-                        <BarChart3 size={150} />
-                    </div>
-                    <p className="text-xs text-pink-400 font-bold uppercase tracking-widest mb-3 relative z-10">Quality Metric</p>
-                    <h4 className="text-2xl font-bold text-white mb-4 relative z-10">Defect Rate Monitoring</h4>
-                    <p className="text-text-secondary leading-relaxed relative z-10">
-                        The embedded dashboard indicates a stabilization phase. Defect rates in localized documentation show a downward trend over the previous 6 months.
-                    </p>
-                </div>
+                {analysisCards.map((card) => {
+                    const IconComponent = card.icon;
+                    return (
+                        <div key={card.id} className={`glass-card p-8 rounded-3xl border-t-4 relative overflow-hidden group hover:-translate-y-2 transition-all duration-300 ${card.borderClass}`}>
+                            <div className="absolute -right-10 -top-10 opacity-10 group-hover:opacity-20 transition-opacity">
+                                <IconComponent size={150} />
+                            </div>
+                            <p className={`text-xs font-bold uppercase tracking-widest mb-3 relative z-10 ${card.categoryTextClass}`}>{card.category}</p>
+                            <h4 className="text-2xl font-bold text-white mb-4 relative z-10">{card.title}</h4>
+                            <p className="text-text-secondary leading-relaxed relative z-10">
+                                {card.description}
+                            </p>
+                        </div>
+                    );
+                })}
             </motion.div>
         </motion.div>
     );

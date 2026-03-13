@@ -17,6 +17,37 @@ const GlobalExplorer = () => {
         html2pdf().set(opt).from(element).save();
     };
 
+    const geographicInsights = [
+        {
+            id: 1,
+            region: 'North America',
+            status: 'Low Risk',
+            description: 'Consistent audit adherence with <1% defect rate.',
+            textColorClass: 'text-cyan-400'
+        },
+        {
+            id: 2,
+            region: 'Asia Pacific',
+            status: 'Improving Compliance',
+            description: 'Surpassing expectations with an 18% drop in flagged issues.',
+            textColorClass: 'text-emerald-400'
+        },
+        {
+            id: 3,
+            region: 'Europe',
+            status: 'Stringent Governance',
+            description: 'Focusing on GDPR and enhanced financial data screening.',
+            textColorClass: 'text-purple-400'
+        },
+        {
+            id: 4,
+            region: 'Latin America',
+            status: 'Monitored Risk',
+            description: 'High vigilance zones with targeted NLP risk assessment deployment.',
+            textColorClass: 'text-orange-400'
+        }
+    ];
+
     const containerVariants = {
         hidden: { opacity: 0 },
         visible: {
@@ -86,26 +117,13 @@ const GlobalExplorer = () => {
                         <MapPin className="text-cyan-400" /> Geographic Risk Insights
                     </h3>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 relative z-10">
-                        <div className="bg-white/5 border border-white/10 rounded-2xl p-5 hover:bg-white/10 transition-colors">
-                            <span className="block text-cyan-400 text-sm font-bold uppercase tracking-wider mb-2">North America</span>
-                            <span className="block text-white text-xl font-medium mb-1">Low Risk</span>
-                            <span className="text-text-secondary text-sm">Consistent audit adherence with &lt;1% defect rate.</span>
-                        </div>
-                        <div className="bg-white/5 border border-white/10 rounded-2xl p-5 hover:bg-white/10 transition-colors">
-                            <span className="block text-emerald-400 text-sm font-bold uppercase tracking-wider mb-2">Asia Pacific</span>
-                            <span className="block text-white text-xl font-medium mb-1">Improving Compliance</span>
-                            <span className="text-text-secondary text-sm">Surpassing expectations with an 18% drop in flagged issues.</span>
-                        </div>
-                        <div className="bg-white/5 border border-white/10 rounded-2xl p-5 hover:bg-white/10 transition-colors">
-                            <span className="block text-purple-400 text-sm font-bold uppercase tracking-wider mb-2">Europe</span>
-                            <span className="block text-white text-xl font-medium mb-1">Stringent Governance</span>
-                            <span className="text-text-secondary text-sm">Focusing on GDPR and enhanced financial data screening.</span>
-                        </div>
-                        <div className="bg-white/5 border border-white/10 rounded-2xl p-5 hover:bg-white/10 transition-colors">
-                            <span className="block text-orange-400 text-sm font-bold uppercase tracking-wider mb-2">Latin America</span>
-                            <span className="block text-white text-xl font-medium mb-1">Monitored Risk</span>
-                            <span className="text-text-secondary text-sm">High vigilance zones with targeted NLP risk assessment deployment.</span>
-                        </div>
+                        {geographicInsights.map((insight) => (
+                            <div key={insight.id} className="bg-white/5 border border-white/10 rounded-2xl p-5 hover:bg-white/10 transition-colors">
+                                <span className={`block text-sm font-bold uppercase tracking-wider mb-2 ${insight.textColorClass}`}>{insight.region}</span>
+                                <span className="block text-white text-xl font-medium mb-1">{insight.status}</span>
+                                <span className="text-text-secondary text-sm" dangerouslySetInnerHTML={{ __html: insight.description }}></span>
+                            </div>
+                        ))}
                     </div>
                 </div>
             </motion.div>

@@ -4,6 +4,35 @@ import { TrendingUp, Globe2, BarChart3, ShieldCheck, ArrowRight } from 'lucide-r
 import { motion } from 'framer-motion';
 
 const Landing = () => {
+    const featureCards = [
+        {
+            id: 1,
+            icon: Globe2,
+            title: 'Global Perspective',
+            description: 'Explore macro-economic inequality trends across regions and continents.',
+            iconColorClass: 'text-blue-400',
+            hasGradient: false
+        },
+        {
+            id: 2,
+            icon: BarChart3,
+            title: 'Deep Analytics',
+            description: 'Perform advanced analysis of income distribution and development indicators.',
+            iconColorClass: 'text-purple-400',
+            hasGradient: true
+        },
+        {
+            id: 3,
+            icon: ShieldCheck,
+            title: 'Enterprise Grade',
+            description: 'Generate meaningful insights with professional-grade security and reliability.',
+            iconColorClass: 'text-emerald-400',
+            hasGradient: false
+        }
+    ];
+
+    const teamMembers = ["Anirudh", "Samruddhi", "Tejaswi", "Riya", "Phalguni"];
+
     return (
         <div className="min-h-screen bg-background text-text-primary overflow-hidden">
             {/* Background Orbs */}
@@ -86,30 +115,21 @@ const Landing = () => {
                     transition={{ duration: 0.8, delay: 0.2 }}
                     className="grid md:grid-cols-3 gap-8 mt-32 text-left"
                 >
-                    <div className="glass-card p-8">
-                        <Globe2 className="text-blue-400 mb-6" size={40} />
-                        <h3 className="text-2xl font-bold text-white mb-4">Global Perspective</h3>
-                        <p className="text-text-secondary leading-relaxed">
-                            Explore macro-economic inequality trends across regions and continents.
-                        </p>
-                    </div>
-
-                    <div className="glass-card p-8 relative overflow-hidden group">
-                        <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-secondary/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                        <BarChart3 className="text-purple-400 mb-6 relative z-10" size={40} />
-                        <h3 className="text-2xl font-bold text-white mb-4 relative z-10">Deep Analytics</h3>
-                        <p className="text-text-secondary leading-relaxed relative z-10">
-                            Perform advanced analysis of income distribution and development indicators.
-                        </p>
-                    </div>
-
-                    <div className="glass-card p-8">
-                        <ShieldCheck className="text-emerald-400 mb-6" size={40} />
-                        <h3 className="text-2xl font-bold text-white mb-4">Enterprise Grade</h3>
-                        <p className="text-text-secondary leading-relaxed">
-                            Generate meaningful insights with professional-grade security and reliability.
-                        </p>
-                    </div>
+                    {featureCards.map((feature) => {
+                        const IconComponent = feature.icon;
+                        return (
+                            <div key={feature.id} className={`glass-card p-8 ${feature.hasGradient ? 'relative overflow-hidden group' : ''}`}>
+                                {feature.hasGradient && (
+                                    <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-secondary/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                                )}
+                                <IconComponent className={`${feature.iconColorClass} mb-6 ${feature.hasGradient ? 'relative z-10' : ''}`} size={40} />
+                                <h3 className={`text-2xl font-bold text-white mb-4 ${feature.hasGradient ? 'relative z-10' : ''}`}>{feature.title}</h3>
+                                <p className={`text-text-secondary leading-relaxed ${feature.hasGradient ? 'relative z-10' : ''}`}>
+                                    {feature.description}
+                                </p>
+                            </div>
+                        );
+                    })}
                 </motion.div>
 
                 {/* Team Members */}
@@ -124,7 +144,7 @@ const Landing = () => {
                     </h2>
 
                     <div className="grid grid-cols-2 md:grid-cols-5 gap-6">
-                        {["Anirudh", "Samruddhi", "Tejaswi", "Riya", "Phalguni"].map((member) => (
+                        {teamMembers.map((member) => (
                             <div key={member} className="glass-card p-4 text-center">
                                 <p className="text-white font-semibold">{member}</p>
                             </div>

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { motion } from 'framer-motion';
-import { UserPlus, Mail, Lock, User, Briefcase, Globe } from 'lucide-react';
+import { UserPlus, Mail, Lock, User, Briefcase, Globe, AlertCircle } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
 const Signup = () => {
@@ -24,7 +24,7 @@ const Signup = () => {
             setAuthError(result.error);
         }
 
-        setIsSubmitting(false);
+        setIsLoading(false);
     };
 
     return (
@@ -106,10 +106,10 @@ const Signup = () => {
 
                 <button
                     type="submit"
-                    disabled={isSubmitting}
+                    disabled={isLoading}
                     className="w-full py-3.5 px-4 mt-2 rounded-xl bg-gradient-to-r from-primary to-secondary text-white font-medium hover:shadow-[0_0_20px_rgba(59,130,246,0.4)] transition-all disabled:opacity-70 disabled:cursor-not-allowed flex justify-center items-center"
                 >
-                    {isSubmitting ? (
+                    {isLoading ? (
                         <div className="w-6 h-6 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
                     ) : (
                         'Create Account'

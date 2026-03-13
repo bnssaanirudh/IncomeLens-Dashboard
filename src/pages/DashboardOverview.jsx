@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import StatCard from '../components/ui/StatCard';
 import PowerBIEmbed from '../components/ui/PowerBIEmbed';
 import { BadgeDollarSign, Activity, Users, TrendingUp, Sparkles, Target, Zap } from 'lucide-react';
@@ -6,6 +6,39 @@ import { motion } from 'framer-motion';
 import html2pdf from 'html2pdf.js';
 
 const DashboardOverview = () => {
+    const [liveData, setLiveData] = useState({
+        defectRate: 1.2,
+        cameraStatus: 'Active',
+        riskScore: 98,
+        casesAnalyzed: 1204
+    });
+
+    const [isUpdating, setIsUpdating] = useState(false);
+
+    // Simulate live data updates every 5 seconds
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setIsUpdating(true);
+            
+            // Simulate API call delay
+            setTimeout(() => {
+                setLiveData(prev => ({
+                    // Defect rate fluctuates between 0.8% and 1.5%
+                    defectRate: +(prev.defectRate + (Math.random() - 0.5) * 0.2).toFixed(1),
+                    // Camera status randomly toggles
+                    cameraStatus: Math.random() > 0.3 ? 'Active' : 'Scanning',
+                    // Risk score fluctuates between 95 and 100
+                    riskScore: Math.floor(95 + Math.random() * 6),
+                    // Cases analyzed increases by 1-5
+                    casesAnalyzed: prev.casesAnalyzed + Math.floor(Math.random() * 5) + 1
+                }));
+                setIsUpdating(false);
+            }, 300);
+        }, 5000);
+
+        return () => clearInterval(interval);
+    }, []);
+
     const handleExportPDF = () => {
         const element = document.getElementById('dashboard-content');
         const opt = {
@@ -17,6 +50,75 @@ const DashboardOverview = () => {
         };
         html2pdf().set(opt).from(element).save();
     };
+
+    // Calculate dynamic status badges
+    const getDefectStatus = () => {
+        const change = (1.2 - liveData.defectRate).toFixed(1);
+        return change > 0 ? `-${change}%` : `+${Math.abs(change)}%`;
+    };
+
+    const getCasesChange = () => {
+        return `+${liveData.casesAnalyzed - 1204}`;
+    };
+
+    const insightsData = [
+        {
+            id: 1,
+            title: 'Overall Defect Rate',
+            value: `${liveData.defectRate}%`,
+            status: getDefectStatus(),
+            icon: Activity,
+            borderClass: 'border-t-blue-500/50',
+            bgClass: 'bg-blue-500/10',
+            bgHoverClass: 'group-hover:bg-blue-500/20',
+            iconBgClass: 'bg-blue-500/20',
+            iconTextClass: 'text-blue-400',
+            statusBgClass: liveData.defectRate < 1.2 ? 'bg-green-500/20' : 'bg-red-500/20',
+            statusTextClass: liveData.defectRate < 1.2 ? 'text-green-400' : 'text-red-400'
+        },
+        {
+            id: 2,
+            title: 'Live Camera Analysis',
+            value: liveData.cameraStatus,
+            status: 'Live',
+            icon: Zap,
+            borderClass: 'border-t-purple-500/50',
+            bgClass: 'bg-purple-500/10',
+            bgHoverClass: 'group-hover:bg-purple-500/20',
+            iconBgClass: 'bg-purple-500/20',
+            iconTextClass: 'text-purple-400',
+            statusBgClass: 'bg-emerald-500/20',
+            statusTextClass: 'text-emerald-400'
+        },
+        {
+            id: 3,
+            title: 'Document Risk Score',
+            value: `${liveData.riskScore}/100`,
+            status: liveData.riskScore >= 98 ? 'Optimal' : 'Good',
+            icon: Target,
+            borderClass: 'border-t-indigo-500/50',
+            bgClass: 'bg-indigo-500/10',
+            bgHoverClass: 'group-hover:bg-indigo-500/20',
+            iconBgClass: 'bg-indigo-500/20',
+            iconTextClass: 'text-indigo-400',
+            statusBgClass: 'bg-blue-500/20',
+            statusTextClass: 'text-blue-400'
+        },
+        {
+            id: 4,
+            title: 'Analyzed Cases Today',
+            value: liveData.casesAnalyzed.toLocaleString(),
+            status: getCasesChange(),
+            icon: Users,
+            borderClass: 'border-t-emerald-500/50',
+            bgClass: 'bg-emerald-500/10',
+            bgHoverClass: 'group-hover:bg-emerald-500/20',
+            iconBgClass: 'bg-emerald-500/20',
+            iconTextClass: 'text-emerald-400',
+            statusBgClass: 'bg-green-500/20',
+            statusTextClass: 'text-green-400'
+        }
+    ];
 
     const containerVariants = {
         hidden: { opacity: 0 },
@@ -89,55 +191,45 @@ const DashboardOverview = () => {
             <motion.div variants={itemVariants}>
                 <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
                     <Target className="text-blue-400" /> Derived Insights
+                    {isUpdating && (
+                        <span className="relative flex h-3 w-3">
+                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                            <span className="relative inline-flex rounded-full h-3 w-3 bg-blue-500"></span>
+                        </span>
+                    )}
                 </h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                    <div className="glass-panel p-6 rounded-2xl relative overflow-hidden group hover:-translate-y-2 transition-all duration-300 border border-t-blue-500/50">
-                        <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/10 rounded-full blur-3xl group-hover:bg-blue-500/20 transition-colors"></div>
-                        <div className="flex justify-between items-start mb-4">
-                            <div className="p-3 bg-blue-500/20 text-blue-400 rounded-xl">
-                                <Activity size={24} />
-                            </div>
-                            <span className="px-3 py-1 bg-green-500/20 text-green-400 text-xs font-bold rounded-full">-2.5%</span>
-                        </div>
-                        <h4 className="text-text-secondary text-sm font-medium uppercase tracking-wider mb-1">Overall Defect Rate</h4>
-                        <p className="text-3xl font-extrabold text-white tracking-tight">1.2%</p>
-                    </div>
-
-                    <div className="glass-panel p-6 rounded-2xl relative overflow-hidden group hover:-translate-y-2 transition-all duration-300 border border-t-purple-500/50">
-                        <div className="absolute top-0 right-0 w-32 h-32 bg-purple-500/10 rounded-full blur-3xl group-hover:bg-purple-500/20 transition-colors"></div>
-                        <div className="flex justify-between items-start mb-4">
-                            <div className="p-3 bg-purple-500/20 text-purple-400 rounded-xl">
-                                <Zap size={24} />
-                            </div>
-                            <span className="px-3 py-1 bg-emerald-500/20 text-emerald-400 text-xs font-bold rounded-full">Live</span>
-                        </div>
-                        <h4 className="text-text-secondary text-sm font-medium uppercase tracking-wider mb-1">Live Camera Analysis</h4>
-                        <p className="text-3xl font-extrabold text-white tracking-tight">Active</p>
-                    </div>
-
-                    <div className="glass-panel p-6 rounded-2xl relative overflow-hidden group hover:-translate-y-2 transition-all duration-300 border border-t-indigo-500/50">
-                        <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-500/10 rounded-full blur-3xl group-hover:bg-indigo-500/20 transition-colors"></div>
-                        <div className="flex justify-between items-start mb-4">
-                            <div className="p-3 bg-indigo-500/20 text-indigo-400 rounded-xl">
-                                <Target size={24} />
-                            </div>
-                            <span className="px-3 py-1 bg-blue-500/20 text-blue-400 text-xs font-bold rounded-full">Optimal</span>
-                        </div>
-                        <h4 className="text-text-secondary text-sm font-medium uppercase tracking-wider mb-1">Document Risk Score</h4>
-                        <p className="text-3xl font-extrabold text-white tracking-tight">98/100</p>
-                    </div>
-
-                    <div className="glass-panel p-6 rounded-2xl relative overflow-hidden group hover:-translate-y-2 transition-all duration-300 border border-t-emerald-500/50">
-                        <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/10 rounded-full blur-3xl group-hover:bg-emerald-500/20 transition-colors"></div>
-                        <div className="flex justify-between items-start mb-4">
-                            <div className="p-3 bg-emerald-500/20 text-emerald-400 rounded-xl">
-                                <Users size={24} />
-                            </div>
-                            <span className="px-3 py-1 bg-green-500/20 text-green-400 text-xs font-bold rounded-full">+145</span>
-                        </div>
-                        <h4 className="text-text-secondary text-sm font-medium uppercase tracking-wider mb-1">Analyzed Cases Today</h4>
-                        <p className="text-3xl font-extrabold text-white tracking-tight">1,204</p>
-                    </div>
+                    {insightsData.map((insight) => {
+                        const IconComponent = insight.icon;
+                        return (
+                            <motion.div 
+                                key={insight.id} 
+                                className={`glass-panel p-6 rounded-2xl relative overflow-hidden group hover:-translate-y-2 transition-all duration-300 border ${insight.borderClass}`}
+                                animate={{ 
+                                    scale: isUpdating ? [1, 1.02, 1] : 1,
+                                }}
+                                transition={{ duration: 0.3 }}
+                            >
+                                <div className={`absolute top-0 right-0 w-32 h-32 rounded-full blur-3xl transition-colors ${insight.bgClass} ${insight.bgHoverClass}`}></div>
+                                <div className="flex justify-between items-start mb-4">
+                                    <div className={`p-3 rounded-xl ${insight.iconBgClass} ${insight.iconTextClass}`}>
+                                        <IconComponent size={24} />
+                                    </div>
+                                    <span className={`px-3 py-1 text-xs font-bold rounded-full ${insight.statusBgClass} ${insight.statusTextClass}`}>{insight.status}</span>
+                                </div>
+                                <h4 className="text-text-secondary text-sm font-medium uppercase tracking-wider mb-1">{insight.title}</h4>
+                                <motion.p 
+                                    className="text-3xl font-extrabold text-white tracking-tight"
+                                    key={insight.value}
+                                    initial={{ opacity: 0, y: 10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ duration: 0.3 }}
+                                >
+                                    {insight.value}
+                                </motion.p>
+                            </motion.div>
+                        );
+                    })}
                 </div>
             </motion.div>
 
