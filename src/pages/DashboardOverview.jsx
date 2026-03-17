@@ -7,10 +7,10 @@ import html2pdf from 'html2pdf.js';
 
 const DashboardOverview = () => {
     const [liveData, setLiveData] = useState({
-        defectRate: 1.2,
-        cameraStatus: 'Active',
-        riskScore: 98,
-        casesAnalyzed: 1204
+        giniIndex: 0.38,
+        incomeGapRatio: 9.4,
+        povertyRate: 10.2,
+        countriesAnalyzed: 142
     });
 
     const [isUpdating, setIsUpdating] = useState(false);
@@ -23,14 +23,14 @@ const DashboardOverview = () => {
             // Simulate API call delay
             setTimeout(() => {
                 setLiveData(prev => ({
-                    // Defect rate fluctuates between 0.8% and 1.5%
-                    defectRate: +(prev.defectRate + (Math.random() - 0.5) * 0.2).toFixed(1),
-                    // Camera status randomly toggles
-                    cameraStatus: Math.random() > 0.3 ? 'Active' : 'Scanning',
-                    // Risk score fluctuates between 95 and 100
-                    riskScore: Math.floor(95 + Math.random() * 6),
-                    // Cases analyzed increases by 1-5
-                    casesAnalyzed: prev.casesAnalyzed + Math.floor(Math.random() * 5) + 1
+                    // Gini Index fluctuates between 0.30 and 0.45
+                    giniIndex: +Math.min(0.45, Math.max(0.30, prev.giniIndex + (Math.random() - 0.5) * 0.02)).toFixed(2),
+                    // Income Gap Ratio (top 10% / bottom 10%) fluctuates between 8.0 and 12.0
+                    incomeGapRatio: +Math.min(12.0, Math.max(8.0, prev.incomeGapRatio + (Math.random() - 0.5) * 0.4)).toFixed(1),
+                    // Poverty rate fluctuates between 8% and 12%
+                    povertyRate: +Math.min(12.0, Math.max(8.0, prev.povertyRate + (Math.random() - 0.5) * 0.3)).toFixed(1),
+                    // Countries analyzed increases by 0-2
+                    countriesAnalyzed: Math.min(195, prev.countriesAnalyzed + Math.floor(Math.random() * 3))
                 }));
                 setIsUpdating(false);
             }, 300);
@@ -52,63 +52,63 @@ const DashboardOverview = () => {
     };
 
     // Calculate dynamic status badges
-    const getDefectStatus = () => {
-        const change = (1.2 - liveData.defectRate).toFixed(1);
-        return change > 0 ? `-${change}%` : `+${Math.abs(change)}%`;
+    const getGiniStatus = () => {
+        const change = (0.38 - liveData.giniIndex).toFixed(2);
+        return change > 0 ? `↓${change}` : `↑${Math.abs(change)}`;
     };
 
-    const getCasesChange = () => {
-        return `+${liveData.casesAnalyzed - 1204}`;
+    const getCountriesChange = () => {
+        return `+${liveData.countriesAnalyzed - 142}`;
     };
 
     const insightsData = [
         {
             id: 1,
-            title: 'Overall Defect Rate',
-            value: `${liveData.defectRate}%`,
-            status: getDefectStatus(),
+            title: 'Global Gini Index',
+            value: liveData.giniIndex.toFixed(2),
+            status: getGiniStatus(),
             icon: Activity,
             borderClass: 'border-t-blue-500/50',
             bgClass: 'bg-blue-500/10',
             bgHoverClass: 'group-hover:bg-blue-500/20',
             iconBgClass: 'bg-blue-500/20',
             iconTextClass: 'text-blue-400',
-            statusBgClass: liveData.defectRate < 1.2 ? 'bg-green-500/20' : 'bg-red-500/20',
-            statusTextClass: liveData.defectRate < 1.2 ? 'text-green-400' : 'text-red-400'
+            statusBgClass: liveData.giniIndex < 0.38 ? 'bg-green-500/20' : 'bg-red-500/20',
+            statusTextClass: liveData.giniIndex < 0.38 ? 'text-green-400' : 'text-red-400'
         },
         {
             id: 2,
-            title: 'Live Camera Analysis',
-            value: liveData.cameraStatus,
-            status: 'Live',
-            icon: Zap,
+            title: 'Income Gap Ratio',
+            value: `${liveData.incomeGapRatio}x`,
+            status: liveData.incomeGapRatio <= 9.0 ? 'Narrowing' : 'Wide',
+            icon: TrendingUp,
             borderClass: 'border-t-purple-500/50',
             bgClass: 'bg-purple-500/10',
             bgHoverClass: 'group-hover:bg-purple-500/20',
             iconBgClass: 'bg-purple-500/20',
             iconTextClass: 'text-purple-400',
-            statusBgClass: 'bg-emerald-500/20',
-            statusTextClass: 'text-emerald-400'
+            statusBgClass: liveData.incomeGapRatio <= 9.0 ? 'bg-emerald-500/20' : 'bg-amber-500/20',
+            statusTextClass: liveData.incomeGapRatio <= 9.0 ? 'text-emerald-400' : 'text-amber-400'
         },
         {
             id: 3,
-            title: 'Document Risk Score',
-            value: `${liveData.riskScore}/100`,
-            status: liveData.riskScore >= 98 ? 'Optimal' : 'Good',
+            title: 'Global Poverty Rate',
+            value: `${liveData.povertyRate}%`,
+            status: liveData.povertyRate <= 10.0 ? 'Declining' : 'Elevated',
             icon: Target,
             borderClass: 'border-t-indigo-500/50',
             bgClass: 'bg-indigo-500/10',
             bgHoverClass: 'group-hover:bg-indigo-500/20',
             iconBgClass: 'bg-indigo-500/20',
             iconTextClass: 'text-indigo-400',
-            statusBgClass: 'bg-blue-500/20',
-            statusTextClass: 'text-blue-400'
+            statusBgClass: liveData.povertyRate <= 10.0 ? 'bg-green-500/20' : 'bg-orange-500/20',
+            statusTextClass: liveData.povertyRate <= 10.0 ? 'text-green-400' : 'text-orange-400'
         },
         {
             id: 4,
-            title: 'Analyzed Cases Today',
-            value: liveData.casesAnalyzed.toLocaleString(),
-            status: getCasesChange(),
+            title: 'Countries Analyzed',
+            value: liveData.countriesAnalyzed.toLocaleString(),
+            status: getCountriesChange(),
             icon: Users,
             borderClass: 'border-t-emerald-500/50',
             bgClass: 'bg-emerald-500/10',

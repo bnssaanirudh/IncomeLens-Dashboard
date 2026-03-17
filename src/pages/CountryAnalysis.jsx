@@ -20,27 +20,27 @@ const CountryAnalysis = () => {
     const analysisCards = [
         {
             id: 1,
-            category: 'Audit Compliance',
-            title: 'Regional Audit Status',
-            description: 'Detailed breakdown correlates local risk factors with direct improvements in overall audit and compliance accuracy.',
+            category: 'Income Distribution',
+            title: 'Income Share Analysis',
+            description: 'Detailed breakdown of income distribution across quintiles reveals the bottom 40% holds only 12% of national income, with the top decile capturing 48%.',
             icon: BookOpen,
             borderClass: 'border-t-orange-500',
             categoryTextClass: 'text-orange-400'
         },
         {
             id: 2,
-            category: 'Data Assurance',
-            title: 'NLP Risk Analysis',
-            description: 'Advanced NLP model processing of regional financial documents shows a 15% increase in automated fraud detection accuracy.',
+            category: 'Wealth Metrics',
+            title: 'Wealth Concentration Index',
+            description: 'Country-level wealth concentration analysis shows the top 1% owns 38% of total wealth, with urban areas exhibiting 2.3x higher concentration than rural regions.',
             icon: Building2,
             borderClass: 'border-t-rose-500',
             categoryTextClass: 'text-rose-400'
         },
         {
             id: 3,
-            category: 'Quality Metric',
-            title: 'Defect Rate Monitoring',
-            description: 'The embedded dashboard indicates a stabilization phase. Defect rates in localized documentation show a downward trend over the previous 6 months.',
+            category: 'Poverty Indicator',
+            title: 'Poverty Trend Tracker',
+            description: 'National poverty rates show a gradual decline of 1.8% over the past 6 months, driven by targeted social programs and rising median household income.',
             icon: BarChart3,
             borderClass: 'border-t-pink-500',
             categoryTextClass: 'text-pink-400'

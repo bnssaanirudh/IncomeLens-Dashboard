@@ -5,67 +5,98 @@ import { useScenario } from '../../context/ScenarioContext';
 import { useAuth } from '../../context/AuthContext';
 import { getGroqChatCompletion } from '../../services/groqService';
 
+// Inline formatting: renders **bold** text within a string
+const renderInline = (text, keyPrefix = '') => {
+    if (!text) return null;
+    const parts = text.split(/(\*\*.*?\*\*)/g);
+    return parts.map((part, i) => {
+        if (part.startsWith('**') && part.endsWith('**')) {
+            return <strong key={`${keyPrefix}-b-${i}`} className="font-semibold text-white">{part.slice(2, -2)}</strong>;
+        }
+        return <span key={`${keyPrefix}-t-${i}`}>{part}</span>;
+    });
+};
+
 // Format message text with better styling
 const formatMessage = (text) => {
     if (!text) return null;
-    
-    // Split by double newlines for paragraphs
-    const paragraphs = text.split('\n\n');
-    
-    return paragraphs.map((paragraph, pIndex) => {
-        // Check if it's a bullet point list
-        const lines = paragraph.split('\n');
-        const isList = lines.some(line => line.trim().match(/^[-•*]\s/));
-        
-        if (isList) {
-            return (
-                <ul key={pIndex} className="space-y-1.5 my-2 pl-4">
-                    {lines.map((line, lIndex) => {
-                        const cleanLine = line.trim().replace(/^[-•*]\s/, '');
-                        if (!cleanLine) return null;
-                        return (
-                            <li key={lIndex} className="flex items-start gap-2">
-                                <span className="text-blue-400 mt-1">•</span>
-                                <span className="flex-1">{cleanLine}</span>
-                            </li>
-                        );
-                    })}
+
+    const lines = text.split('\n');
+    const elements = [];
+    let i = 0;
+
+    while (i < lines.length) {
+        const line = lines[i];
+        const trimmed = line.trim();
+
+        // Skip empty lines
+        if (!trimmed) {
+            i++;
+            continue;
+        }
+
+        // Bullet list: group consecutive bullet lines
+        if (trimmed.match(/^[-•*]\s/)) {
+            const items = [];
+            while (i < lines.length && lines[i].trim().match(/^[-•*]\s/)) {
+                items.push(lines[i].trim().replace(/^[-•*]\s/, ''));
+                i++;
+            }
+            elements.push(
+                <ul key={`ul-${elements.length}`} className="space-y-1.5 my-2 pl-1">
+                    {items.map((item, idx) => (
+                        <li key={idx} className="flex items-start gap-2">
+                            <span className="text-blue-400 mt-0.5 shrink-0">•</span>
+                            <span className="flex-1">{renderInline(item, `ul-${elements.length}-${idx}`)}</span>
+                        </li>
+                    ))}
                 </ul>
             );
+            continue;
         }
-        
-        // Check if it's a numbered list
-        const isNumberedList = lines.some(line => line.trim().match(/^\d+\.\s/));
-        if (isNumberedList) {
-            return (
-                <ol key={pIndex} className="space-y-1.5 my-2 pl-4 list-decimal list-inside">
-                    {lines.map((line, lIndex) => {
-                        const cleanLine = line.trim().replace(/^\d+\.\s/, '');
-                        if (!cleanLine) return null;
-                        return (
-                            <li key={lIndex} className="ml-2">
-                                {cleanLine}
-                            </li>
-                        );
-                    })}
+
+        // Numbered list: group consecutive numbered lines
+        if (trimmed.match(/^\d+[.)]\s/)) {
+            const items = [];
+            while (i < lines.length && lines[i].trim().match(/^\d+[.)]\s/)) {
+                items.push(lines[i].trim().replace(/^\d+[.)]\s/, ''));
+                i++;
+            }
+            elements.push(
+                <ol key={`ol-${elements.length}`} className="space-y-1.5 my-2 pl-1">
+                    {items.map((item, idx) => (
+                        <li key={idx} className="flex items-start gap-2">
+                            <span className="text-blue-400 font-semibold mt-0.5 shrink-0 min-w-[1.2rem] text-right">{idx + 1}.</span>
+                            <span className="flex-1">{renderInline(item, `ol-${elements.length}-${idx}`)}</span>
+                        </li>
+                    ))}
                 </ol>
             );
+            continue;
         }
-        
-        // Regular paragraph with bold text support
-        const formattedParagraph = paragraph.split(/(\*\*.*?\*\*)/g).map((part, index) => {
-            if (part.startsWith('**') && part.endsWith('**')) {
-                return <strong key={index} className="font-bold text-white">{part.slice(2, -2)}</strong>;
-            }
-            return part;
-        });
-        
-        return (
-            <p key={pIndex} className={pIndex > 0 ? 'mt-3' : ''}>
-                {formattedParagraph}
+
+        // Heading-style line (all bold or ends with colon)
+        if ((trimmed.startsWith('**') && trimmed.endsWith('**')) || (trimmed.endsWith(':') && trimmed.length < 80)) {
+            const headingText = trimmed.replace(/^\*\*|\*\*$/g, '').replace(/:$/, '');
+            elements.push(
+                <p key={`h-${elements.length}`} className="font-semibold text-white mt-3 mb-1 text-[0.92rem]">
+                    {headingText}{trimmed.endsWith(':') ? ':' : ''}
+                </p>
+            );
+            i++;
+            continue;
+        }
+
+        // Regular paragraph
+        elements.push(
+            <p key={`p-${elements.length}`} className={elements.length > 0 ? 'mt-2' : ''}>
+                {renderInline(trimmed, `p-${elements.length}`)}
             </p>
         );
-    });
+        i++;
+    }
+
+    return elements;
 };
 
 const ChatbotWidget = () => {

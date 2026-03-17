@@ -15,6 +15,7 @@ import DashboardOverview from './pages/DashboardOverview';
 import GlobalExplorer from './pages/GlobalExplorer';
 import CountryAnalysis from './pages/CountryAnalysis';
 import FeedbackPage from './pages/FeedbackPage';
+import DataExplorer from './pages/DataExplorer';
 
 // Context
 import { ScenarioProvider } from './context/ScenarioContext';
@@ -41,6 +42,7 @@ function App() {
         <Route path="global" element={<GlobalExplorer />} />
         <Route path="country" element={<CountryAnalysis />} />
         <Route path="feedback" element={<FeedbackPage />} />
+        <Route path="explore" element={<DataExplorer />} />
       </Route>
 
       {/* Catch-all redirect */}

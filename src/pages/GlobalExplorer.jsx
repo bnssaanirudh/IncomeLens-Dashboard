@@ -21,29 +21,29 @@ const GlobalExplorer = () => {
         {
             id: 1,
             region: 'North America',
-            status: 'Low Risk',
-            description: 'Consistent audit adherence with <1% defect rate.',
+            status: 'Moderate Inequality',
+            description: 'Gini index at 0.39 with widening urban-rural income disparity across major economies.',
             textColorClass: 'text-cyan-400'
         },
         {
             id: 2,
             region: 'Asia Pacific',
-            status: 'Improving Compliance',
-            description: 'Surpassing expectations with an 18% drop in flagged issues.',
+            status: 'Rapidly Shifting',
+            description: 'Rising middle class reducing poverty by 12%, but top 1% wealth share increasing.',
             textColorClass: 'text-emerald-400'
         },
         {
             id: 3,
             region: 'Europe',
-            status: 'Stringent Governance',
-            description: 'Focusing on GDPR and enhanced financial data screening.',
+            status: 'Low Inequality',
+            description: 'Strongest social safety nets globally with average Gini of 0.31 across EU nations.',
             textColorClass: 'text-purple-400'
         },
         {
             id: 4,
             region: 'Latin America',
-            status: 'Monitored Risk',
-            description: 'High vigilance zones with targeted NLP risk assessment deployment.',
+            status: 'High Inequality',
+            description: 'Highest regional Gini at 0.46 with significant gaps between top 10% and bottom 40%.',
             textColorClass: 'text-orange-400'
         }
     ];
@@ -105,16 +105,16 @@ const GlobalExplorer = () => {
                     <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-emerald-400 to-cyan-500 flex items-center justify-center text-white mb-6 shadow-lg shadow-emerald-500/30">
                         <Navigation size={24} />
                     </div>
-                    <h3 className="text-2xl font-bold text-white mb-3">Global Compliance Mapping</h3>
+                    <h3 className="text-2xl font-bold text-white mb-3">Global Inequality Mapping</h3>
                     <p className="text-text-secondary leading-relaxed">
-                        In-depth analysis of international compliance reveals significant improvements in audit completion rates, driving a secure operational framework across regions.
+                        Cross-regional analysis of income distribution reveals significant disparities in wealth concentration, with emerging economies showing the fastest shifts in Gini coefficients.
                     </p>
                 </div>
 
                 <div className="glass-panel p-8 relative overflow-hidden group hover:-translate-y-2 transition-transform duration-500 rounded-3xl border border-white/5 md:col-span-2">
                     <div className="absolute bottom-0 left-0 w-64 h-64 bg-cyan-500/10 rounded-full blur-3xl group-hover:bg-cyan-500/20 transition-colors"></div>
                     <h3 className="text-2xl font-bold text-white mb-6 relative z-10 flex items-center gap-2">
-                        <MapPin className="text-cyan-400" /> Geographic Risk Insights
+                        <MapPin className="text-cyan-400" /> Regional Inequality Insights
                     </h3>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 relative z-10">
                         {geographicInsights.map((insight) => (
