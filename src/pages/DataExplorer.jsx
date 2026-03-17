@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Upload, FileSpreadsheet, BarChart3, X, TrendingUp, PieChart, Activity, Radar, ScatterChart } from 'lucide-react';
+import { Upload, FileSpreadsheet, BarChart3, X, TrendingUp, PieChart, Activity, Radar, ScatterChart, Download } from 'lucide-react';
+import html2pdf from 'html2pdf.js';
 import {
     Chart as ChartJS,
     CategoryScale,
@@ -99,6 +100,18 @@ const DataExplorer = () => {
     const [fileName, setFileName] = useState('');
     const [isDragging, setIsDragging] = useState(false);
     const [error, setError] = useState('');
+
+    const handleExportPDF = () => {
+        const element = document.getElementById('data-explorer-content');
+        const opt = {
+            margin: 0.5,
+            filename: `Data-Explorer-Report-${fileName || 'Untitled'}.pdf`,
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2, useCORS: true, backgroundColor: '#0f172a' },
+            jsPDF: { unit: 'in', format: 'letter', orientation: 'landscape' }
+        };
+        html2pdf().set(opt).from(element).save();
+    };
 
     const processFile = (file) => {
         if (!file) return;
@@ -420,7 +433,8 @@ const DataExplorer = () => {
 
     return (
         <motion.div
-            className="space-y-8"
+            id="data-explorer-content"
+            className="space-y-8 p-4"
             variants={containerVariants}
             initial="hidden"
             animate="visible"
@@ -434,11 +448,18 @@ const DataExplorer = () => {
                     </h2>
                     <p className="text-text-secondary mt-2 text-lg">Upload any CSV file to generate interactive visualizations</p>
                 </div>
-                {csvData && (
-                    <button onClick={handleClear} className="px-5 py-2.5 rounded-xl bg-red-500/10 border border-red-500/30 text-red-400 font-medium text-sm hover:bg-red-500/20 transition-all flex items-center gap-2">
-                        <X size={16} /> Clear Data
-                    </button>
-                )}
+                <div className="flex gap-3">
+                    {csvData && (
+                        <>
+                            <button onClick={handleExportPDF} className="px-5 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white font-medium text-sm hover:bg-white/10 transition-all flex items-center gap-2">
+                                <Download size={16} /> Export PDF
+                            </button>
+                            <button onClick={handleClear} className="px-5 py-2.5 rounded-xl bg-red-500/10 border border-red-500/30 text-red-400 font-medium text-sm hover:bg-red-500/20 transition-all flex items-center gap-2">
+                                <X size={16} /> Clear Data
+                            </button>
+                        </>
+                    )}
+                </div>
             </motion.div>
 
             {/* Upload Zone */}
