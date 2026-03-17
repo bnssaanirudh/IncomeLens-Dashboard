@@ -191,7 +191,7 @@ const GlobeExplorer = () => {
       <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
         <div>
           <h2 className="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-500 tracking-tight flex items-center gap-3">
-            Globe Explorer
+            Country Visuals
             <Globe className="text-indigo-400 animate-[spin_12s_linear_infinite]" size={32} />
           </h2>
           <p className="text-gray-400 mt-1">Click any country marker to explore inequality data</p>
