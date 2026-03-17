@@ -8,7 +8,8 @@ import {
     LogOut,
     TrendingUp,
     MessageSquare,
-    BarChart3
+    BarChart3,
+    Orbit
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 
@@ -18,6 +19,7 @@ const Sidebar = () => {
     const navItems = [
         { path: '/dashboard', icon: LayoutDashboard, label: 'Overview' },
         { path: '/dashboard/global', icon: Globe2, label: 'Global Explorer' },
+        { path: '/dashboard/globe', icon: Orbit, label: 'Globe Explorer' },
         { path: '/dashboard/country', icon: Map, label: 'Country Analysis' },
         { path: '/dashboard/feedback', icon: MessageSquare, label: 'Feedback' },
         { path: '/dashboard/explore', icon: BarChart3, label: 'Data Explorer' },

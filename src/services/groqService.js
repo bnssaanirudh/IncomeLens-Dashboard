@@ -1,11 +1,19 @@
 import Groq from 'groq-sdk';
 
-// Initialize Groq client with the API key from environment variables
-// Note: We use dangerouslyAllowBrowser for frontend demo purposes
-const groq = new Groq({
-    apiKey: import.meta.env.VITE_GROQ_API_KEY,
-    dangerouslyAllowBrowser: true 
-});
+// Lazy-initialize so a missing API key doesn't crash the app on import
+let groq = null;
+const getGroqClient = () => {
+    if (!groq) {
+        const apiKey = import.meta.env.VITE_GROQ_API_KEY;
+        if (!apiKey || apiKey === 'your_groq_api_key_here') return null;
+        try {
+            groq = new Groq({ apiKey, dangerouslyAllowBrowser: true });
+        } catch {
+            return null;
+        }
+    }
+    return groq;
+};
 
 // System prompts defined for different Role-Based Access Tiers
 const ROLE_PROMPTS = {
@@ -46,10 +54,13 @@ FORMAT YOUR RESPONSES:
 };
 
 export const getGroqChatCompletion = async (userMessage, role = 'user') => {
+    const client = getGroqClient();
+    if (!client) {
+        return "AI chat requires a valid GROQ API key in your .env file (VITE_GROQ_API_KEY).";
+    }
     try {
         const systemPrompt = ROLE_PROMPTS[role] || ROLE_PROMPTS.user;
-
-        const chatCompletion = await groq.chat.completions.create({
+        const chatCompletion = await client.chat.completions.create({
             messages: [
                 {
                     role: 'system',

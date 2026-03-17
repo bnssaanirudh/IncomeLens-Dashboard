@@ -13,6 +13,7 @@ import Signup from './pages/Signup';
 // Dashboard Pages
 import DashboardOverview from './pages/DashboardOverview';
 import GlobalExplorer from './pages/GlobalExplorer';
+import GlobeExplorer from './pages/GlobeExplorer';
 import CountryAnalysis from './pages/CountryAnalysis';
 import FeedbackPage from './pages/FeedbackPage';
 import DataExplorer from './pages/DataExplorer';
@@ -40,6 +41,7 @@ function App() {
       }>
         <Route index element={<DashboardOverview />} />
         <Route path="global" element={<GlobalExplorer />} />
+        <Route path="globe" element={<GlobeExplorer />} />
         <Route path="country" element={<CountryAnalysis />} />
         <Route path="feedback" element={<FeedbackPage />} />
         <Route path="explore" element={<DataExplorer />} />
