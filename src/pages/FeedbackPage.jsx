@@ -5,6 +5,8 @@ import { MessageSquare, Star, Send } from 'lucide-react';
 const FeedbackPage = () => {
     const [rating, setRating] = useState(0);
     const [hoverRating, setHoverRating] = useState(0);
+    const [featureUsed, setFeatureUsed] = useState('');
+    const [recommendation, setRecommendation] = useState('');
     const [feedback, setFeedback] = useState('');
     const [isSubmitted, setIsSubmitted] = useState(false);
 
@@ -15,6 +17,8 @@ const FeedbackPage = () => {
         setTimeout(() => setIsSubmitted(false), 3000);
         setFeedback('');
         setRating(0);
+        setFeatureUsed('');
+        setRecommendation('');
     };
 
     return (
@@ -71,6 +75,40 @@ const FeedbackPage = () => {
                         </div>
 
                         <div>
+                            <label className="block text-sm font-medium text-white mb-2">Which feature do you use the most?</label>
+                            <select
+                                value={featureUsed}
+                                onChange={(e) => setFeatureUsed(e.target.value)}
+                                className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-primary/50 transition-colors appearance-none"
+                            >
+                                <option value="" disabled className="bg-gray-900">Select a feature...</option>
+                                <option value="Global Map" className="bg-gray-900">Global Map Explorer</option>
+                                <option value="Data Insights" className="bg-gray-900">Data Insights</option>
+                                <option value="Risk Analysis" className="bg-gray-900">AI Risk Analysis</option>
+                                <option value="Chatbot" className="bg-gray-900">Educational Chatbot</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label className="block text-sm font-medium text-white mb-2">How likely are you to recommend IncomeLens?</label>
+                            <div className="flex gap-4">
+                                {['Very Likely', 'Likely', 'Neutral', 'Unlikely', 'Very Unlikely'].map((option) => (
+                                    <label key={option} className="flex items-center gap-2 cursor-pointer text-text-secondary hover:text-white transition-colors">
+                                        <input
+                                            type="radio"
+                                            name="recommendation"
+                                            value={option}
+                                            checked={recommendation === option}
+                                            onChange={(e) => setRecommendation(e.target.value)}
+                                            className="w-4 h-4 text-primary bg-white/5 border-white/10 focus:ring-primary focus:ring-2 accent-primary"
+                                        />
+                                        <span className="text-sm">{option}</span>
+                                    </label>
+                                ))}
+                            </div>
+                        </div>
+
+                        <div>
                             <label className="block text-sm font-medium text-white mb-2">Detailed Comments</label>
                             <textarea
                                 value={feedback}
@@ -84,7 +122,7 @@ const FeedbackPage = () => {
                         <div className="flex justify-end">
                             <button
                                 type="submit"
-                                disabled={!rating || !feedback.trim()}
+                                disabled={!rating || !feedback.trim() || !featureUsed || !recommendation}
                                 className="px-6 py-3 rounded-xl bg-gradient-to-r from-primary to-secondary text-white font-medium flex items-center gap-2 hover:scale-[1.02] transition-transform disabled:opacity-50 disabled:hover:scale-100 shadow-[0_0_20px_rgba(59,130,246,0.3)]"
                             >
                                 Submit Feedback

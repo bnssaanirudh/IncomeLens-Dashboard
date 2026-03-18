@@ -59,6 +59,33 @@
   border-radius: 4px;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(71, 85, 105, 1); 
 }
+
+@media print {
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+  
+  body {
+    background-color: #0f172a !important; /* Force true dark background */
+    color: #f8fafc !important; /* Force white text */
+  }
+
+  nav, aside, header, .sidebar, .navbar {
+    display: none !important;
+  }
+  
+  /* Force dark backgrounds on glass elements for printing */
+  .glass-panel, .glass-card {
+    background-color: rgba(30, 41, 59, 1) !important;
+    border-color: rgba(255, 255, 255, 0.2) !important;
+    color: #f8fafc !important;
+  }
+
+  /* Ensure text stands out in print */
+  p, h1, h2, h3, h4, h5, h6, span {
+    color: inherit;
+  }
+}
+

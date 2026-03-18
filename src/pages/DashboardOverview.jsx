@@ -40,15 +40,7 @@ const DashboardOverview = () => {
     }, []);
 
     const handleExportPDF = () => {
-        const element = document.getElementById('dashboard-content');
-        const opt = {
-            margin: 0.5,
-            filename: 'Executive-Summary-Report.pdf',
-            image: { type: 'jpeg', quality: 0.98 },
-            html2canvas: { scale: 2, useCORS: true },
-            jsPDF: { unit: 'in', format: 'letter', orientation: 'landscape' }
-        };
-        html2pdf().set(opt).from(element).save();
+        window.print();
     };
 
     // Calculate dynamic status badges

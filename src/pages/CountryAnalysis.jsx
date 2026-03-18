@@ -6,15 +6,7 @@ import html2pdf from 'html2pdf.js';
 
 const CountryAnalysis = () => {
     const handleExportPDF = () => {
-        const element = document.getElementById('country-analysis-content');
-        const opt = {
-            margin: 0.5,
-            filename: 'Country-Analysis-Report.pdf',
-            image: { type: 'jpeg', quality: 0.98 },
-            html2canvas: { scale: 2, useCORS: true },
-            jsPDF: { unit: 'in', format: 'letter', orientation: 'landscape' }
-        };
-        html2pdf().set(opt).from(element).save();
+        window.print();
     };
 
     const analysisCards = [

@@ -102,15 +102,7 @@ const DataExplorer = () => {
     const [error, setError] = useState('');
 
     const handleExportPDF = () => {
-        const element = document.getElementById('data-explorer-content');
-        const opt = {
-            margin: 0.5,
-            filename: `Data-Explorer-Report-${fileName || 'Untitled'}.pdf`,
-            image: { type: 'jpeg', quality: 0.98 },
-            html2canvas: { scale: 2, useCORS: true, backgroundColor: '#0f172a' },
-            jsPDF: { unit: 'in', format: 'letter', orientation: 'landscape' }
-        };
-        html2pdf().set(opt).from(element).save();
+        window.print();
     };
 
     const processFile = (file) => {
