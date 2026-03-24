@@ -31,10 +31,10 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
-    const signup = async (name, email, password) => {
+    const signup = async (name, email, password, role) => {
         setIsLoading(true);
         try {
-            const userData = await authService.signup(name, email, password);
+            const userData = await authService.signup(name, email, password, role);
             setUser(userData);
             localStorage.setItem('incomelens_user', JSON.stringify(userData));
             return { success: true };

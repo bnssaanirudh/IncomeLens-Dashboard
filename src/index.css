@@ -59,9 +59,12 @@
   border-radius: 4px;
 }
 
-}
-
 @media print {
+  @page {
+    size: landscape;
+    margin: 1cm;
+  }
+
   * {
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
@@ -70,6 +73,7 @@
   body {
     background-color: #0f172a !important; /* Force true dark background */
     color: #f8fafc !important; /* Force white text */
+    zoom: 0.8;
   }
 
   nav, aside, header, .sidebar, .navbar {
@@ -81,11 +85,26 @@
     background-color: rgba(30, 41, 59, 1) !important;
     border-color: rgba(255, 255, 255, 0.2) !important;
     color: #f8fafc !important;
+    page-break-inside: avoid;
+    break-inside: avoid;
   }
 
   /* Ensure text stands out in print */
-  p, h1, h2, h3, h4, h5, h6, span {
+  p, h1, h2, h3, h4, h5, h6, span, div {
     color: inherit;
+  }
+
+  /* Fix iframes and layout */
+  iframe {
+    max-height: 100vh !important;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  /* Main container layout fixes */
+  #dashboard-content, #country-analysis-content, #global-explorer-content, #data-explorer-content {
+    width: 100% !important;
+    display: block !important;
   }
 }
 

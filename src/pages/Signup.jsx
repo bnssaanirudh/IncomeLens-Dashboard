@@ -16,7 +16,7 @@ const Signup = () => {
         setIsLoading(true);
         setAuthError('');
 
-        const result = await signup(data.name, data.email, data.password);
+        const result = await signup(data.name, data.email, data.password, data.accountType);
 
         if (result.success) {
             navigate('/dashboard');
@@ -83,6 +83,28 @@ const Signup = () => {
                         />
                     </div>
                     {errors.email && <p className="mt-1.5 text-sm text-red-400">{errors.email.message}</p>}
+                </div>
+
+                <div>
+                    <label className="block text-sm font-medium text-text-secondary mb-2">Account Type</label>
+                    <div className="relative">
+                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-text-secondary">
+                            <Briefcase size={18} />
+                        </div>
+                        <select
+                            {...register('accountType', { required: 'Account type is required' })}
+                            className={`w-full bg-black/20 border ${errors.accountType ? 'border-red-500/50 focus:border-red-500' : 'border-white/10 focus:border-primary'} rounded-xl py-3 pl-10 pr-4 text-white placeholder-text-secondary/50 outline-none transition-colors focus:shadow-[0_0_15px_rgba(59,130,246,0.2)] appearance-none cursor-pointer`}
+                        >
+                            <option value="" className="bg-gray-900 text-gray-400">Select Account Type</option>
+                            <option value="user" className="bg-gray-900">General User</option>
+                            <option value="student" className="bg-gray-900">Student</option>
+                            <option value="expert" className="bg-gray-900">Expert</option>
+                        </select>
+                        <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-text-secondary">
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </div>
+                    </div>
+                    {errors.accountType && <p className="mt-1.5 text-sm text-red-400">{errors.accountType.message}</p>}
                 </div>
 
                 <div>

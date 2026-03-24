@@ -33,7 +33,7 @@ export const authService = {
         });
     },
 
-    signup: async (name, email, password) => {
+    signup: async (name, email, password, role = 'user') => {
         // eslint-disable-next-line no-unused-vars
         const response = await new Promise(resolve =>
             setTimeout(() => {
@@ -42,7 +42,7 @@ export const authService = {
                     name,
                     email,
                     token: 'mock-jwt-token-67890',
-                    role: 'user',
+                    role,
                 });
             }, 1000)
         );
